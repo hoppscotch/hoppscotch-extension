@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npx parcel build src/* --out-dir dist/ && cp manifest.json dist/manifest.json",
-    "watch": "cp manifest.json dist/manifest.json && parcel watch src/* --out-dir dist/ --no-hmr"
+    "build": "npx parcel build src/* --out-dir dist/ && cp manifest.json dist/manifest.json && cp -r icons/ dist/icons/",
+    "watch": "cp manifest.json dist/manifest.json && cp icons/ dist/icons/ && parcel watch src/* --out-dir dist/ --no-hmr"
   },
   "author": "",
   "license": "ISC",

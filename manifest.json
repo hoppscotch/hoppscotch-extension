@@ -1,5 +1,5 @@
 {
-  "name": "Postwoman extension",
+  "name": "Postwoman Extension for Chrome",
   "version": "0.1",
   "description": "Provides more capabilities for Postwoman (https://postwoman.io)",
   "background": {
@@ -11,7 +11,12 @@
     "http://*/"
   ],
   "externally_connectable": {
-    "matches": ["http://localhost:3000/*", "https://postwoman.io/"]
+    "matches": [
+      "http://localhost:3000/*", 
+      "https://postwoman.io/*", 
+      "http://postwoman.io/*", 
+      "https://postwoman.netlify.com/*"
+    ]
   },
   "manifest_version": 2
 }

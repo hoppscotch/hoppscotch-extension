@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const VERSION = { major: 0, minor: 1 };
 
@@ -12,19 +12,35 @@ interface SendRequestMessageData {
   config: AxiosRequestConfig;
 }
 
+interface RecvRequestMessageData {
+  response: AxiosResponse<any> | null;
+  error: any | null;
+}
+
 interface VersionRequestMessageData {
   version: { major: number, minor: number };
 }
 
 
 const handleSendRequestMessage = async (message: PWChromeMessage<SendRequestMessageData>) => {
-  const res = await axios(message.data.config);
-  return <PWChromeMessage<any>>{
-    messageType: "recv-req",
-    data: {
-      response: res
+  try {
+    const res = await axios(message.data.config);
+    return <PWChromeMessage<RecvRequestMessageData>>{
+      messageType: "recv-req",
+      data: {
+        response: res,
+        error: null
+      }
+    };
+  } catch (e) {
+    return <PWChromeMessage<RecvRequestMessageData>> {
+      messageType: "recv-req",
+      data: {
+        response: null,
+        error: e
+      }
     }
-  };
+  }
 }
 
 chrome.runtime.onMessageExternal.addListener((message: PWChromeMessage<any>, _sender, sendResponse) => {

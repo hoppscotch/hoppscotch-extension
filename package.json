@@ -1,0 +1,22 @@
+{
+  "name": "postwoman-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npx parcel build src/* --out-dir dist/ && cp manifest.json dist/manifest.json",
+    "watch": "cp manifest.json dist/manifest.json && parcel watch src/* --out-dir dist/ --no-hmr"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "0.0.91",
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "^3.0.0",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.1"
+  }
+}

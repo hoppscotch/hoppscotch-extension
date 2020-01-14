@@ -1,0 +1,17 @@
+{
+  "name": "Postwoman extension",
+  "version": "0.1",
+  "description": "Provides more capabilities for Postwoman (https://postwoman.io)",
+  "background": {
+    "scripts": [ "index.js" ],
+    "persistent": false 
+  },
+  "permissions": [
+    "https://*/",
+    "http://*/"
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost:3000/*", "https://postwoman.io/"]
+  },
+  "manifest_version": 2
+}

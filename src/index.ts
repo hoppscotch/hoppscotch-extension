@@ -18,9 +18,6 @@ interface VersionRequestMessageData {
 
 
 const handleSendRequestMessage = async (message: PWChromeMessage<SendRequestMessageData>) => {
-  console.log("Request!!!");
-  console.log(message);
-
   const res = await axios(message.data.config);
   return <PWChromeMessage<any>>{
     messageType: "recv-req",
@@ -31,8 +28,6 @@ const handleSendRequestMessage = async (message: PWChromeMessage<SendRequestMess
 }
 
 chrome.runtime.onMessageExternal.addListener((message: PWChromeMessage<any>, _sender, sendResponse) => {
-  console.log("Message!!!");
-  console.log(message);
   if (message.messageType === "send-req") {
     handleSendRequestMessage(message).then(sendResponse);
   } else if (message.messageType === "send-version") {

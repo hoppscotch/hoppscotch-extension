@@ -14,14 +14,19 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*/*"
+        "https://postwoman.io/",
+        "https://postwoman.io/*",
+        "https://postwoman.netlify.com/*",
+        "https://postwoman.netlify.com/"
       ],
       "js": [ "contentScript.js" ]
     }
   ],
   "permissions": [
-    "https://*/",
-    "http://*/"
+    "https://postwoman.io/",
+    "https://postwoman.io/*",
+    "https://postwoman.netlify.com/*",
+    "https://postwoman.netlify.com/"
   ],
   "externally_connectable": {
     "matches": [

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
-const VERSION = { major: 0, minor: 1 };
+const VERSION = { major: 0, minor: 2 };
 
 
 interface PWChromeMessage<T> {

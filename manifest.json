@@ -23,6 +23,7 @@
     }
   ],
   "permissions": [
+    "*://*",
     "https://postwoman.io/",
     "https://postwoman.io/*",
     "https://postwoman.netlify.com/*",

@@ -23,19 +23,11 @@
     }
   ],
   "permissions": [
-    "*://*",
+    "*://*/*",
     "https://postwoman.io/",
     "https://postwoman.io/*",
     "https://postwoman.netlify.com/*",
     "https://postwoman.netlify.com/"
   ],
-  "externally_connectable": {
-    "matches": [
-      "http://localhost:3000/*", 
-      "https://postwoman.io/*", 
-      "http://postwoman.io/*", 
-      "https://postwoman.netlify.com/*"
-    ]
-  },
   "manifest_version": 2
 }

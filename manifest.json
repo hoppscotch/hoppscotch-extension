@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Postwoman Extension for Chrome",
+  "name": "Postwoman Browser Extension",
   "version": "0.3",
   "description": "Provides more capabilities for Postwoman (https://postwoman.io)",
   "icons": {

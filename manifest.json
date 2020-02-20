@@ -1,4 +1,5 @@
 {
+  "manifest_version": 2,
   "name": "Postwoman Extension for Chrome",
   "version": "0.3",
   "description": "Provides more capabilities for Postwoman (https://postwoman.io)",
@@ -29,5 +30,14 @@
     "https://postwoman.netlify.com/*",
     "https://postwoman.netlify.com/"
   ],
-  "manifest_version": 2
+  "applications": {
+    "gecko": {
+      "id": "postwoman-firefox@postwoman.io"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "postwoman-firefox@postwoman.io"
+    }
+  }
 }

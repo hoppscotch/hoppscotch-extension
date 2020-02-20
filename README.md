@@ -1,6 +1,7 @@
-# Postwoman Extension for Google Chrome
+# Postwoman Browser Extension
 
 <a href="https://chrome.google.com/webstore/detail/postwoman-extension-for-c/amknoiejhlmhancpahfcfcfhllgkpbld">![Get the add-on](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)</a>
+<a href="https://addons.mozilla.org/en-US/firefox/addon/postwoman/">![Get the add-on](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)</a>
 
 **Haven't tried Postwoman yet ? Try it at [https://postwoman.io/](https://postwoman.io/)**
 
@@ -31,12 +32,11 @@ This extension currently provides the following features to Postwoman.
 ```
 - Run `npm install`
 - Run `npm run build` to generate the *dist* folder
-- Open Chrome and navigate to `chrome://extensions`, click on Load Unpacked and then select the generated dist folder.
-- Copy the generated extension ID and paste it to the `EXTENSION_ID` property in the Postwoman repo's `functions/strategies/ChromeStrategy.js` file.
+- Install the extension using your browser's install options (a quick google search will yield the methods)
 
 <br />
 <br />
-Postwoman is built with help of an amazing group of people.
+Postwoman is built with the help of an amazing group of people.
 <br />
 Contribute to Postwoman: <a href="https://github.com/liyasthomas/postwoman">https://github.com/liyasthomas/postwoman</a>
 <br/>

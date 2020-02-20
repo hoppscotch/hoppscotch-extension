@@ -15,7 +15,7 @@ function errorToObject(e: any) {
   };
 }
 
-const VERSION = { major: 0, minor: 3 };
+const VERSION = { major: 0, minor: 4 };
 
 
 interface PWChromeMessage<T> {

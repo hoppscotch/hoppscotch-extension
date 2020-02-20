@@ -23,9 +23,12 @@ window.addEventListener('message', ev => {
   }
 });
 
+const VERSION = { major: 0, minor: 4 };
+
 const script = document.createElement('script');
 script.textContent = `
   window.__POSTWOMAN_EXTENSION_HOOK__ = {
+    getVersion: () => (${JSON.stringify(VERSION)}),
     sendRequest: (config) => new Promise((resolve, reject) => {
       function handleMessage(ev) {
         if (ev.source !== window || !ev.data) {

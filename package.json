@@ -1,15 +1,15 @@
 {
   "name": "postwoman-extension",
-  "version": "0.2.0",
-  "description": "",
+  "version": "0.5.0",
+  "description": "Provides more features to the Postwoman webapp (https://postwoman.io/)",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "npx parcel build src/* --out-dir dist/ && npx copyfiles manifest.json dist && npx copyfiles icons/* dist",
     "watch": "cp manifest.json dist/manifest.json && cp icons/ dist/icons/ && parcel watch src/* --out-dir dist/ --no-hmr"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Andrew Bastin",
+  "license": "MIT",
   "devDependencies": {
     "@types/chrome": "0.0.91",
     "copyfiles": "^2.2.0",

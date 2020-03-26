@@ -65,3 +65,5 @@ script.textContent = `
 
 document.documentElement.appendChild(script);
 script.parentNode.removeChild(script);
+
+console.log(`Connected to Postwoman Browser Extension v${VERSION.major}.${VERSION.minor}`);

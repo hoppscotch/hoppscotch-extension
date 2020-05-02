@@ -44,6 +44,8 @@ Contribute to Postwoman: <a href="https://github.com/liyasthomas/postwoman">http
 Sponsor Postwoman: [OpenCollective](https://opencollective.com/postwoman)
 
 
+If you liked what you saw, please consider sponsoring, helps me keep the lights on!
+
 <br />
 <br />
 <p align="center"><b>made with ❤️ by <a href="https://github.com/AndrewBastin">andrew bastin</a></b></p>

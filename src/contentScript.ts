@@ -23,7 +23,7 @@ window.addEventListener('message', ev => {
   }
 });
 
-const VERSION = { major: 0, minor: 5 };
+const VERSION = { major: 0, minor: 6 };
 
 const script = document.createElement('script');
 script.textContent = `

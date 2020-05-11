@@ -29,6 +29,47 @@ const script = document.createElement('script');
 script.textContent = `
   window.__POSTWOMAN_EXTENSION_HOOK__ = {
     getVersion: () => (${JSON.stringify(VERSION)}),
+
+    transformFormData: async (config) => {
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+      });
+
+      if (config.data instanceof FormData) {
+        
+        config.formFiles = [];
+        config.formData = [];
+
+        const entries = Array.from(config.data.entries());
+
+        for (const [key, value] of entries) {
+          if (value instanceof File) {
+            const convertedValue = await toBase64(value);
+
+            config.formFiles.push({
+              key: key,
+              value: convertedValue,
+              filename: value.name
+            });
+
+          } else {
+            config.formData.push({
+              key: key,
+              value: value
+            });
+          }
+        }
+
+        config.data = null;
+
+        return config;
+      }
+    },
+
     sendRequest: (config) => new Promise((resolve, reject) => {
       function handleMessage(ev) {
         if (ev.source !== window || !ev.data) {
@@ -55,10 +96,12 @@ script.textContent = `
 
       window.addEventListener('message', handleMessage);
 
-      window.postMessage({
-        type: '__POSTWOMAN_EXTENSION_REQUEST__',
-        config
-      }, '*');
+      window.__POSTWOMAN_EXTENSION_HOOK__.transformFormData(config).then((transformedConfig) => {
+        window.postMessage({
+          type: '__POSTWOMAN_EXTENSION_REQUEST__',
+          config
+        }, '*');
+      });
     })
   }
 `;

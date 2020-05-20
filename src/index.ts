@@ -62,7 +62,26 @@ const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (reqConfi
 
 const handleSendRequestMessage = async (config: any) => {
   try {
-    const res = await axios(processRequestFormData(config));
+    const res = await axios({
+      ...processRequestFormData(config),
+      
+      transformResponse: [(data, headers) => {
+        if (
+          headers["content-type"].startsWith("application/json") ||
+          headers["content-type"].startsWith("application/vnd.api+json") ||
+          headers["content-type"].startsWith("application/hal+json")
+        ) {
+          try {
+            const jsonData = JSON.parse(data)
+            return jsonData
+          } catch (e) {
+            return data
+          }
+        }
+
+        return data
+      }]
+    });
     return <PWChromeMessage<RecvRequestMessageData>>{
       messageType: "recv-req",
       data: {

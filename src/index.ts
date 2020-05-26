@@ -67,9 +67,11 @@ const handleSendRequestMessage = async (config: any) => {
       
       transformResponse: [(data, headers) => {
         if (
-          headers["content-type"].startsWith("application/json") ||
-          headers["content-type"].startsWith("application/vnd.api+json") ||
-          headers["content-type"].startsWith("application/hal+json")
+          headers["content-type"] && (
+            headers["content-type"].startsWith("application/json") ||
+            headers["content-type"].startsWith("application/vnd.api+json") ||
+            headers["content-type"].startsWith("application/hal+json")
+          )
         ) {
           try {
             const jsonData = JSON.parse(data)

@@ -12,12 +12,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "0.0.91",
-    "copyfiles": "^2.2.0",
+    "copyfiles": "^2.3.0",
     "parcel-bundler": "^1.12.4",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.7.4"
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
   },
   "dependencies": {
-    "axios": "^0.19.1"
+    "axios": "^0.19.2"
   }
 }

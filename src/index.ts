@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
+let cancelSource = axios.CancelToken.source();
+
 function errorToObject(e: any) {
   return {
     // Standard
@@ -65,6 +67,8 @@ const handleSendRequestMessage = async (config: any) => {
     const res = await axios({
       ...processRequestFormData(config),
       
+      cancelToken: cancelSource.token,
+
       transformResponse: [(data, headers) => {
         if (
           headers["content-type"] && (
@@ -107,9 +111,16 @@ const handleSendRequestMessage = async (config: any) => {
   }
 }
 
+const cancelRequest = () => {
+  cancelSource.cancel();
+  cancelSource = axios.CancelToken.source();
+}
+
 chrome.runtime.onMessage.addListener((message: PWChromeMessage<any>, _sender, sendResponse) => {
   if (message.messageType === "send-req") {
     handleSendRequestMessage(message.data).then(sendResponse);
     return true;
+  } else if (message.messageType === "cancel-req") {
+
   }
 });

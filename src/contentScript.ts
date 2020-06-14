@@ -20,6 +20,10 @@ window.addEventListener('message', ev => {
         }, '*');
       }
     })
+  } else if (ev.data.type === '__POSTWOMAN_EXTENSION_CANCEL__') {
+    chrome.runtime.sendMessage({
+      messageType: "cancel-req"
+    });
   }
 });
 
@@ -68,6 +72,12 @@ script.textContent = `
 
         return config;
       }
+    },
+
+    cancelRequest: (config) => {
+      window.postMessage({
+        type: '__POSTWOMAN_EXTENSION_CANCEL__'
+      }, '*');
     },
 
     sendRequest: (config) => new Promise((resolve, reject) => {

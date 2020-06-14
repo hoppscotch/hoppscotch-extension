@@ -16,7 +16,7 @@ function errorToObject(e: any) {
 }
 
 interface PWChromeMessage<T> {
-  messageType: "send-req" | "recv-req"; 
+  messageType: "send-req" | "recv-req" | "cancel-req"; 
   data: T;
 }
 

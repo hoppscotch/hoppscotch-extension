@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npx parcel build src/* --out-dir dist/ && npx copyfiles manifest.json dist && npx copyfiles icons/* dist",
-    "watch": "cp manifest.json dist/manifest.json && cp icons/ dist/icons/ && parcel watch src/* --out-dir dist/ --no-hmr"
+    "build": "npx parcel build src/* --out-dir dist/ && npx copyfiles manifest.json dist && npx copyfiles icons/* dist"
   },
   "author": "Andrew Bastin",
   "license": "MIT",

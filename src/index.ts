@@ -146,6 +146,7 @@ chrome.runtime.onMessage.addListener((message: PWChromeMessage<any>, _sender, se
     handleSendRequestMessage(message.data).then(sendResponse);
     return true;
   } else if (message.messageType === "cancel-req") {
-
+    cancelRequest();
+    return true;
   }
 });

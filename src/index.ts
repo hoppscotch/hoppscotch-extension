@@ -62,44 +62,69 @@ const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (reqConfi
   return reqConfig as AxiosRequestConfig;
 }
 
+function bufferToBase64(buffer: any) {
+  return btoa(new Uint8Array(buffer).reduce((data, byte)=> {
+    return data + String.fromCharCode(byte);
+  }, ''));
+}
+
 const handleSendRequestMessage = async (config: any) => {
   try {
-    const res = await axios({
-      ...processRequestFormData(config),
-      
-      cancelToken: cancelSource.token,
-
-      transformResponse: [(data, headers) => {
-        if (
-          headers["content-type"] && (
-            headers["content-type"].startsWith("application/json") ||
-            headers["content-type"].startsWith("application/vnd.api+json") ||
-            headers["content-type"].startsWith("application/hal+json")
-          )
-        ) {
-          try {
-            const jsonData = JSON.parse(data)
-            return jsonData
-          } catch (e) {
-            return data
-          }
+    if (config.wantsBinary) {
+      const r = await axios({
+        ...processRequestFormData(config),
+        cancelToken: cancelSource.token,
+      });
+      return <PWChromeMessage<RecvRequestMessageData>>{
+        messageType: "recv-req",
+        data: {
+          response: {
+            status: r.status,
+            statusText: r.statusText,
+            headers: r.headers,
+            data: bufferToBase64(r.data)
+          },
+          error: null
         }
+      };
+    } else {
+      const res = await axios({
+        ...processRequestFormData(config),
+        
+        cancelToken: cancelSource.token,
 
-        return data
-      }]
-    });
-    return <PWChromeMessage<RecvRequestMessageData>>{
-      messageType: "recv-req",
-      data: {
-        response: {
-          status: res.status,
-          statusText: res.statusText,
-          headers: res.headers,
-          data: res.data
-        },
-        error: null
-      }
-    };
+        transformResponse: [(data, headers) => {
+          if (
+            headers["content-type"] && (
+              headers["content-type"].startsWith("application/json") ||
+              headers["content-type"].startsWith("application/vnd.api+json") ||
+              headers["content-type"].startsWith("application/hal+json")
+            )
+          ) {
+            try {
+              const jsonData = JSON.parse(data)
+              return jsonData
+            } catch (e) {
+              return data
+            }
+          }
+
+          return data
+        }]
+      });
+      return <PWChromeMessage<RecvRequestMessageData>>{
+        messageType: "recv-req",
+        data: {
+          response: {
+            status: res.status,
+            statusText: res.statusText,
+            headers: res.headers,
+            data: res.data
+          },
+          error: null
+        }
+      };
+    }
   } catch (e) {
     return <PWChromeMessage<RecvRequestMessageData>> {
       messageType: "recv-req",

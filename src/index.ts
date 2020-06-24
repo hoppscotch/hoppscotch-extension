@@ -25,6 +25,7 @@ interface PWChromeMessage<T> {
 interface RecvRequestMessageData {
   response: AxiosResponse<any> | null;
   error: any | null;
+  isBinary: boolean;
 }
 
 const convertDataURLToBlob = (dataurl: string) => {
@@ -74,6 +75,7 @@ const handleSendRequestMessage = async (config: any) => {
       const r = await axios({
         ...processRequestFormData(config),
         cancelToken: cancelSource.token,
+        responseType: 'arraybuffer'
       });
       return <PWChromeMessage<RecvRequestMessageData>>{
         messageType: "recv-req",
@@ -84,6 +86,7 @@ const handleSendRequestMessage = async (config: any) => {
             headers: r.headers,
             data: bufferToBase64(r.data)
           },
+          isBinary: true,
           error: null
         }
       };
@@ -121,6 +124,7 @@ const handleSendRequestMessage = async (config: any) => {
             headers: res.headers,
             data: res.data
           },
+          isBinary: false,
           error: null
         }
       };

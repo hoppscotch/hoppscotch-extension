@@ -34,6 +34,44 @@ script.textContent = `
   window.__POSTWOMAN_EXTENSION_HOOK__ = {
     getVersion: () => (${JSON.stringify(VERSION)}),
 
+    decodeB64ToArrayBuffer: (input, ab) => {
+
+      const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+      const bytes = parseInt((input.length / 4) * 3, 10);
+      
+      let uarray;
+      let chr1, chr2, chr3;
+      let enc1, enc2, enc3, enc4;
+      let i = 0;
+      let j = 0;
+      
+      if (ab)
+        uarray = new Uint8Array(ab);
+      else
+        uarray = new Uint8Array(bytes);
+      
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+      
+      for (i=0; i<bytes; i+=3) {	
+        //get the 3 octects in 4 ascii chars
+        enc1 = keyStr.indexOf(input.charAt(j++));
+        enc2 = keyStr.indexOf(input.charAt(j++));
+        enc3 = keyStr.indexOf(input.charAt(j++));
+        enc4 = keyStr.indexOf(input.charAt(j++));
+    
+        chr1 = (enc1 << 2) | (enc2 >> 4);
+        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        chr3 = ((enc3 & 3) << 6) | enc4;
+    
+        uarray[i] = chr1;			
+        if (enc3 != 64) uarray[i+1] = chr2;
+        if (enc4 != 64) uarray[i+2] = chr3;
+      }
+    
+      return uarray;	
+    },
+
     transformFormData: async (config) => {
 
       const toBase64 = file => new Promise((resolve, reject) => {
@@ -87,6 +125,12 @@ script.textContent = `
         }
 
         if (ev.data.type === '__POSTWOMAN_EXTENSION_RESPONSE__') {
+          const bytes = (ev.data.response.data.length/4) * 3;
+          const ab = new ArrayBuffer(bytes);
+          window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(ev.data.response.data, ab);
+
+          ev.data.response.data = ab;
+
           resolve(ev.data.response);
           window.removeEventListener('message', handleMessage);
         } else if (ev.data.type === '__POSTWOMAN_EXTENSION_ERROR__') {

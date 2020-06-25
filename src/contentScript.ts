@@ -28,7 +28,7 @@ window.addEventListener('message', ev => {
   }
 });
 
-const VERSION = { major: 0, minor: 12 };
+const VERSION = { major: 0, minor: 13 };
 
 const script = document.createElement('script');
 script.textContent = `

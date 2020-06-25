@@ -16,7 +16,8 @@ window.addEventListener('message', ev => {
       } else {
         window.postMessage({
           type: '__POSTWOMAN_EXTENSION_RESPONSE__',
-          response: message.data.response
+          response: message.data.response,
+          isBinary: message.data.isBinary
         }, '*');
       }
     })
@@ -125,11 +126,15 @@ script.textContent = `
         }
 
         if (ev.data.type === '__POSTWOMAN_EXTENSION_RESPONSE__') {
-          const bytes = (ev.data.response.data.length/4) * 3;
-          const ab = new ArrayBuffer(bytes);
-          window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(ev.data.response.data, ab);
 
-          ev.data.response.data = ab;
+          // Apply transformation from base64 to arraybuffer
+          if (ev.data.isBinary) {
+            const bytes = (ev.data.response.data.length/4) * 3;
+            const ab = new arraybuffer(bytes);
+            window.__postwoman_extension_hook__.decodeb64toarraybuffer(ev.data.response.data, ab);
+
+            ev.data.response.data = ab;
+          }
 
           resolve(ev.data.response);
           window.removeEventListener('message', handleMessage);

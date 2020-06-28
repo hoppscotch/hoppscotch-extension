@@ -130,8 +130,8 @@ script.textContent = `
           // Apply transformation from base64 to arraybuffer
           if (ev.data.isBinary) {
             const bytes = (ev.data.response.data.length/4) * 3;
-            const ab = new arraybuffer(bytes);
-            window.__postwoman_extension_hook__.decodeb64toarraybuffer(ev.data.response.data, ab);
+            const ab = new ArrayBuffer(bytes);
+            window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(ev.data.response.data, ab);
 
             ev.data.response.data = ab;
           }

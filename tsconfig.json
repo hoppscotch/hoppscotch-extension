@@ -6,7 +6,7 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "./dist",
-    "types": [ "chrome" ]
+    "types": [ "chrome", "node" ]
   },
   "include": [
     "src/**/*"

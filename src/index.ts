@@ -3,6 +3,13 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 let cancelSource = axios.CancelToken.source();
 
 function errorToObject(e: any) {
+  if (e.response && e.response.data) {
+    try {
+      e.response.data = bufferToBase64(e.response.data);
+    } catch (_e) {
+    }
+  }
+
   return {
     // Standard
     message: e.message,
@@ -77,6 +84,7 @@ const handleSendRequestMessage = async (config: any) => {
         cancelToken: cancelSource.token,
         responseType: 'arraybuffer'
       });
+
       return <PWChromeMessage<RecvRequestMessageData>>{
         messageType: "recv-req",
         data: {

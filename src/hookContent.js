@@ -114,6 +114,12 @@ window.__POSTWOMAN_EXTENSION_HOOK__ = {
         e.stack = error.stack;
         if (error.response) {
           e.response = error.response;
+
+          const bytes = (e.response.data.length / 4) * 3;
+          const ab = new ArrayBuffer(bytes);
+
+          window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(e.response.data, ab);
+          e.response.data = ab;
         }
         reject(e);
         window.removeEventListener('message', handleMessage);

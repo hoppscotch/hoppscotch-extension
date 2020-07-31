@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Postwoman Browser Extension",
-  "version": "0.14",
+  "version": "0.15",
   "description": "Provides more capabilities for Postwoman (https://postwoman.io)",
   "icons": {
     "16": "icons/icon-16x16.png",

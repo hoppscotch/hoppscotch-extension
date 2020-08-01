@@ -38,7 +38,7 @@ This extension currently provides the following features to Postwoman.
 <br />
 Postwoman is built with the help of an amazing group of people.
 <br />
-Contribute to Postwoman: <a href="https://github.com/liyasthomas/postwoman">https://github.com/liyasthomas/postwoman</a>
+Contribute to Postwoman: <a href="https://github.com/postwoman-io/postwoman">https://github.com/postwoman-io/postwoman</a>
 <br/>
 
 Sponsor Postwoman: [OpenCollective](https://opencollective.com/postwoman)
@@ -48,6 +48,6 @@ If you liked what you saw, please consider sponsoring, helps me keep the lights 
 
 <br />
 <br />
-<p align="center"><b>made with ❤️ by <a href="https://github.com/AndrewBastin">andrew bastin</a></b></p>
+<p align="center"><b>Happy Coding!!! ❤️</b></p>
 
 

@@ -1,7 +1,7 @@
 {
-  "name": "postwoman-extension",
-  "version": "0.15.0",
-  "description": "Provides more features to the Postwoman webapp (https://postwoman.io/)",
+  "name": "hoppscotch-extension",
+  "version": "0.16.0",
+  "description": "Provides more features to the Hoppscotch webapp (https://postwoman.io/)",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",

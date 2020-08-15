@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Postwoman Browser Extension",
-  "version": "0.15",
-  "description": "Provides more capabilities for Postwoman (https://postwoman.io)",
+  "name": "Hoppscotch Browser Extension",
+  "version": "0.16",
+  "description": "Provides more capabilities for Hoppscotch (https://hoppscotch.io)",
   "icons": {
     "16": "icons/icon-16x16.png",
     "48": "icons/icon-48x48.png",
@@ -15,6 +15,10 @@
   "content_scripts": [
     {
       "matches": [
+        "https://hoppscotch.io/",
+        "https://hoppscotch.io/*",
+        "https://hoppscotch.netlify.com/*",
+        "https://hoppscotch.netlify.com/",
         "https://postwoman.io/",
         "https://postwoman.io/*",
         "https://postwoman.netlify.com/*",
@@ -25,6 +29,10 @@
   ],
   "permissions": [
     "*://*/*",
+    "https://hoppscotch.io/",
+    "https://hoppscotch.io/*",
+    "https://hoppscotch.netlify.com/*",
+    "https://hoppscotch.netlify.com/",
     "https://postwoman.io/",
     "https://postwoman.io/*",
     "https://postwoman.netlify.com/*",

@@ -32,7 +32,7 @@ window.addEventListener('message', ev => {
   }
 });
 
-const VERSION = { major: 0, minor: 15 };
+const VERSION = { major: 0, minor: 16 };
 
 const script = document.createElement('script');
 script.textContent = hookContent;
@@ -40,4 +40,4 @@ script.textContent = hookContent;
 document.documentElement.appendChild(script);
 script.parentNode.removeChild(script);
 
-console.log(`Connected to Postwoman Browser Extension v${VERSION.major}.${VERSION.minor}`);
+console.log(`Connected to Hoppscotch Browser Extension v${VERSION.major}.${VERSION.minor}`);

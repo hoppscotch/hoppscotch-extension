@@ -1,18 +1,18 @@
-# Postwoman Browser Extension
+# Hoppscotch Browser Extension
 
-<a href="https://chrome.google.com/webstore/detail/postwoman-extension-for-c/amknoiejhlmhancpahfcfcfhllgkpbld">![Get the add-on](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)</a>
-<a href="https://addons.mozilla.org/en-US/firefox/addon/postwoman/">![Get the add-on](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)</a>
+<a href="https://chrome.google.com/webstore/detail/hoppscotch-browser-extens/amknoiejhlmhancpahfcfcfhllgkpbld">![Get the add-on](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)</a>
+<a href="https://addons.mozilla.org/en-US/firefox/addon/hoppscotch/">![Get the add-on](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)</a>
 
-**Haven't tried Postwoman yet ? Try it at [https://postwoman.io/](https://postwoman.io/)**
+**Haven't tried Hoppscotch yet ? Try it at [https://hoppscotch.io/](https://hoppscotch.io/)**
 
 <br />
-This extension currently provides the following features to Postwoman.
+This extension currently provides the following features to Hoppscotch.
 
 - Overrides CORS restrictions for cross-origin requests.
 
 
 ### Building & Experimentation
-- Setup a local copy of postwoman repo [(Instructions)](https://github.com/liyasthomas/postwoman#developing-)
+- Setup a local copy of Hoppscotch repo [(Instructions)](https://github.com/hoppscotch/hoppscotch#developing-)
 - Clone the repo
 - Then head into the `manifest.json` file and edit it to match this snippet below
 
@@ -21,10 +21,10 @@ This extension currently provides the following features to Postwoman.
     {
       "matches": [
         "*://*/*",
-        "https://postwoman.io/",
-        "https://postwoman.io/*",
-        "https://postwoman.netlify.com/*",
-        "https://postwoman.netlify.com/"
+        "https://hoppscotch.io/",
+        "https://hoppscotch.io/*",
+        "https://hoppscotch.netlify.com/*",
+        "https://hoppscotch.netlify.com/"
       ],
       "js": [ "contentScript.js" ]
     }
@@ -36,12 +36,12 @@ This extension currently provides the following features to Postwoman.
 
 <br />
 <br />
-Postwoman is built with the help of an amazing group of people.
+Hoppscotch is built with the help of an amazing group of people.
 <br />
-Contribute to Postwoman: <a href="https://github.com/postwoman-io/postwoman">https://github.com/postwoman-io/postwoman</a>
+Contribute to Hoppscotch: <a href="https://github.com/hoppscotch/hoppscotch">https://github.com/hoppscotch/hoppscotch</a>
 <br/>
 
-Sponsor Postwoman: [OpenCollective](https://opencollective.com/postwoman)
+Sponsor Hoppscotch: [OpenCollective](https://opencollective.com/hoppscotch)
 
 
 If you liked what you saw, please consider sponsoring, helps me keep the lights on!

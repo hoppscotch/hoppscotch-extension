@@ -10,17 +10,18 @@ function errorToObject(e: any) {
     }
   }
 
+  // This mess below is a hack to go around Firefox's memory bounding system 
   return {
     // Standard
-    message: e.message,
-    name: e.name,
+    message: e.message ? JSON.parse(JSON.stringify(e.message)) : undefined,
+    name: e.name ? JSON.parse(JSON.stringify(e.name)) : undefined,
     // Mozilla
-    fileName: e.fileName,
-    lineNumber: e.lineNumber,
-    columnNumber: e.columnNumber,
-    stack: e.stack,
+    fileName: e.fileName ? JSON.parse(JSON.stringify(e.fileName)) : undefined,
+    lineNumber: e.lineNumber ? JSON.parse(JSON.stringify(e.lineNumber)) : undefined,
+    columnNumber: e.columnNumber ? JSON.parse(JSON.stringify(e.columnNumber)) : undefined,
+    stack: e.stack ? JSON.parse(JSON.stringify(e.stack)) : undefined,
     // Axios
-    response: e.response
+    response: e.response ? JSON.parse(JSON.stringify(e.response)) : undefined
   };
 }
 

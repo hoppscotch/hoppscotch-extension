@@ -1,6 +1,6 @@
 window.__POSTWOMAN_EXTENSION_HOOK__ = {
 
-  getVersion: () => ({ major: 0, minor: 16 }),
+  getVersion: () => ({ major: 0, minor: 17 }),
 
   decodeB64ToArrayBuffer: (input, ab) => {
 

@@ -39,11 +39,18 @@ const onInputTextChange = (ev: InputEvent) => {
   render(page(), document.body);
 }
 
+const onDeleteOriginClicked = async (index: number) => {
+  origins.splice(index, 1);
+  await storeOriginList(origins);
+
+  render(page(), document.body);
+}
+
 const page = () => html`
   <h1>Hoppscotch Extension!</h1>
   This is the popup page!
   ${inputField(inputText, onInputTextChange, onAddClick)}
-  ${originList(origins)} 
+  ${originList(origins, onDeleteOriginClicked)} 
 `;
 
 const inputField = (inputText: string, onInputTextChange: (ev: InputEvent) => void, onAddClick: () => void) => html`
@@ -53,12 +60,13 @@ const inputField = (inputText: string, onInputTextChange: (ev: InputEvent) => vo
   </div>
 `;
 
-const originList = (origins: string[]) => html`
+const originList = (origins: string[], onDeleteClicked: (index: number) => void) => html`
   <ul>
     ${
-      origins.map(e => html`
+      origins.map((origin, i) => html`
         <li>
-          ${e}
+          ${origin}
+          <button @click=${() => onDeleteClicked(i)}>Delete</button>
         </li>
       `)
     }

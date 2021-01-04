@@ -1,13 +1,18 @@
 import { html, render } from "lit-html";
+import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins";
 
-let origins = [ "https://postwoman.io/", "https://postwoman.netlify.app/" ];
+let origins: string[] = [];
 
 let inputText = "";
 
 const getOriginList = () => new Promise<string[]>((resolve, _) => {
-  (chrome.storage.sync as any).get(['originList'], (result: any) => { 
-    if (!result || !result.originList) resolve([]);
-    resolve(JSON.parse(result.originList));
+  chrome.storage.sync.get(['originList'], async (items: { [key: string]: any }) => { 
+    if (!items || !items.originList) {
+      await storeOriginList(DEFAULT_ORIGIN_LIST);
+
+      resolve(DEFAULT_ORIGIN_LIST);
+    }
+    resolve(JSON.parse(items.originList));
   });
 });
 

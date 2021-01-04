@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { readFileSync } from "fs";
+import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins";
 
 let cancelSource = axios.CancelToken.source();
 
@@ -194,4 +194,10 @@ chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
     });
 
   }
+});
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.sync.set({
+    originList: JSON.stringify(DEFAULT_ORIGIN_LIST)
+  }, () => {});
 });

@@ -1,5 +1,13 @@
 import { html, render } from "lit-html";
+import { unsafeSVG } from "lit-html/directives/unsafe-svg";
+
 import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins";
+
+import { readFileSync } from "fs";
+
+const ICON_ADD = readFileSync(__dirname + "/add-icon.svg", "utf-8");
+const ICON_DELETE = readFileSync(__dirname + "/delete-icon.svg", "utf-8");
+
 
 let origins: string[] = [];
 
@@ -50,29 +58,37 @@ const onDeleteOriginClicked = async (index: number) => {
   await storeOriginList(origins);
 
   render(page(), document.body);
-}
+    }
 
 const page = () => html`
-  <h1>Hoppscotch Extension!</h1>
-  This is the popup page!
   ${inputField(inputText, onInputTextChange, onAddClick)}
   ${originList(origins, onDeleteOriginClicked)} 
 `;
 
 const inputField = (inputText: string, onInputTextChange: (ev: InputEvent) => void, onAddClick: () => void) => html`
-  <div>
-    <input .value=${inputText} @change=${onInputTextChange}></input>
-    <button @click=${onAddClick}>Add</button>
-  </div>
+  <form novalidate class="origin-input-box">
+    <label class="origin-input-label" for="origin-input">Enter new origin</label>
+
+    <div class="origin-input-wrapper">
+      <input id="origin-input" required placeholder="https://hoppscotch.io" class="origin-input" .value=${inputText} @change=${onInputTextChange}></input>
+      <button class="origin-add" type="submit" @click=${onAddClick}>
+        ${unsafeSVG(ICON_ADD)}
+        <span class="button-text">Add</span>
+      </button>
+    </div>
+  </form>
 `;
 
 const originList = (origins: string[], onDeleteClicked: (index: number) => void) => html`
-  <ul>
+  <label class="origin-input-label">Active origins</label>
+  <ul class="origin-list">
     ${
       origins.map((origin, i) => html`
-        <li>
-          ${origin}
-          <button @click=${() => onDeleteClicked(i)}>Delete</button>
+        <li class="origin-list-entry">
+          <span class="origin-list-entry-origin">${origin}</span>
+          <button class="origin-delete" @click=${() => onDeleteClicked(i)}>
+            ${unsafeSVG(ICON_DELETE)}
+          </button>
         </li>
       `)
     }

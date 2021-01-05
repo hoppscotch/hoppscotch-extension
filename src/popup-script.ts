@@ -139,8 +139,12 @@ chrome.tabs.query({ active: true }, (result) => {
   if (result.length > 0) {
     try {
       if (result[0].url) {
+        if (!result[0].url.startsWith("http")) return;
+
         const url = new URL(result[0].url);
-        placeholderURL = url.origin;
+        if (url && url.origin) {
+          placeholderURL = url.origin;
+        }
 
         render(page(), document.body);
       }

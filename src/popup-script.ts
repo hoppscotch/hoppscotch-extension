@@ -118,7 +118,7 @@ const originList = (origins: string[], onDeleteClicked: (index: number) => void)
       origins.map((origin, i) => html`
         <li class="origin-list-entry">
           <span class="origin-list-entry-origin">${origin}</span>
-          <button class="origin-delete" @click=${() => onDeleteClicked(i)}>
+          <button class="origin-delete" .disabled=${ origin === "https://hoppscotch.io" } @click=${() => onDeleteClicked(i)}>
             ${unsafeSVG(ICON_DELETE)}
           </button>
         </li>

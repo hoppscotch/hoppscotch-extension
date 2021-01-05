@@ -87,6 +87,7 @@ body {
 }
 
 .origin-delete {
+  cursor: pointer;
   background-color: transparent;
   color: #fe4645;
   border-radius: 2px;
@@ -97,6 +98,11 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.origin-delete:disabled {
+  color: #ffffff55;
+  cursor: auto;
 }
 
 .button-text {

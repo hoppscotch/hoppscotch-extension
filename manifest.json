@@ -16,32 +16,7 @@
     "default_title": "Hoppscotch Extension",
     "default_popup": "popup.html"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://hoppscotch.io/",
-        "https://hoppscotch.io/*",
-        "https://hoppscotch.netlify.com/*",
-        "https://hoppscotch.netlify.com/",
-        "https://postwoman.io/",
-        "https://postwoman.io/*",
-        "https://postwoman.netlify.com/*",
-        "https://postwoman.netlify.com/"
-      ],
-      "js": [ "contentScript.js" ]
-    }
-  ],
   "permissions": [
-    "*://*/*",
-    "https://hoppscotch.io/",
-    "https://hoppscotch.io/*",
-    "https://hoppscotch.netlify.com/*",
-    "https://hoppscotch.netlify.com/",
-    "https://postwoman.io/",
-    "https://postwoman.io/*",
-    "https://postwoman.netlify.com/*",
-    "https://postwoman.netlify.com/",
-
     "storage",
     "tabs",
     "<all_urls>"

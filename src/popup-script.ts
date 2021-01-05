@@ -25,12 +25,18 @@ const storeOriginList = (originList: string[]) => new Promise((resolve, _) => {
 });
 
 const onAddClick = () => {
-  origins.push(inputText);
-  inputText = "";
+  try {
+    const parsedURL = new URL(inputText);
 
-  storeOriginList(origins);
+    origins.push(parsedURL.origin);
+    inputText = "";
 
-  render(page(), document.body);
+    storeOriginList(origins);
+
+    render(page(), document.body);
+  } catch (e) {
+    alert("Improper URL");
+  }
 }
 
 const onInputTextChange = (ev: InputEvent) => {

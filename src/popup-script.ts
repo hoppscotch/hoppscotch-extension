@@ -5,9 +5,9 @@ import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins";
 
 import { readFileSync } from "fs";
 
-const ICON_ADD = readFileSync(__dirname + "/add-icon.svg", "utf-8");
-const ICON_DELETE = readFileSync(__dirname + "/delete-icon.svg", "utf-8");
-const ICON_ERROR = readFileSync(__dirname + "/error-icon.svg", "utf-8");
+const ICON_ADD = readFileSync(__dirname + "/add-icon.svg", "utf8");
+const ICON_DELETE = readFileSync(__dirname + "/delete-icon.svg", "utf8");
+const ICON_ERROR = readFileSync(__dirname + "/error-icon.svg", "utf8");
 
 
 let origins: string[] = [];
@@ -17,7 +17,7 @@ let placeholderURL = "https://hoppscotch.io";
 let errorMessage = "";
 
 const getOriginList = () => new Promise<string[]>((resolve, _) => {
-  chrome.storage.sync.get(['originList'], async (items: { [key: string]: any }) => { 
+  chrome.storage.sync.get(['originList'], async (items: { [key: string]: string }) => { 
     if (!items || !items.originList) {
       await storeOriginList(DEFAULT_ORIGIN_LIST);
 
@@ -131,6 +131,8 @@ getOriginList().then((list) => {
   origins = list;
 
   render(page(), document.body); 
+}).catch(() => {
+  // Just fail silently :P
 });
 
 chrome.tabs.query({ active: true }, (result) => {

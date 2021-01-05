@@ -17,8 +17,21 @@
 body {
   background-color: #202124;
   width: 20rem;
+  height: 20rem;
   color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.err {
+  background-color: #fe4645bb;
+  color: white;
+  display: flex;
+  padding: 0.4rem;
+  border-radius: 3px;
+}
+
+.err-text {
+  padding: 0 0.4rem;
 }
 
 .origin-input:focus, .origin-input:hover {

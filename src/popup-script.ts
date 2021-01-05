@@ -7,11 +7,14 @@ import { readFileSync } from "fs";
 
 const ICON_ADD = readFileSync(__dirname + "/add-icon.svg", "utf-8");
 const ICON_DELETE = readFileSync(__dirname + "/delete-icon.svg", "utf-8");
+const ICON_ERROR = readFileSync(__dirname + "/error-icon.svg", "utf-8");
 
 
 let origins: string[] = [];
 
 let inputText = "";
+let placeholderURL = "https://hoppscotch.io";
+let errorMessage = "";
 
 const getOriginList = () => new Promise<string[]>((resolve, _) => {
   chrome.storage.sync.get(['originList'], async (items: { [key: string]: any }) => { 
@@ -32,23 +35,35 @@ const storeOriginList = (originList: string[]) => new Promise((resolve, _) => {
   });
 });
 
-const onAddClick = () => {
+const onAddClick = (event: MouseEvent) => {
+  event.preventDefault();
+
   try {
     const parsedURL = new URL(inputText);
 
-    origins.push(parsedURL.origin);
-    inputText = "";
+    if (origins.includes(parsedURL.origin)) {
+      errorMessage = "Origin is already on the list";
+      render(page(), document.body);
+    } else {
+      origins.push(parsedURL.origin);
+      inputText = "";
 
-    storeOriginList(origins);
+      storeOriginList(origins);
 
-    render(page(), document.body);
+      errorMessage = "";
+
+      render(page(), document.body);
+    }
   } catch (e) {
-    alert("Improper URL");
+    errorMessage = "Improper URL";
+    render(page(), document.body);
   }
 }
 
 const onInputTextChange = (ev: InputEvent) => {
   inputText = (ev.target as HTMLInputElement).value;
+
+  errorMessage = "";
 
   render(page(), document.body);
 }
@@ -58,19 +73,36 @@ const onDeleteOriginClicked = async (index: number) => {
   await storeOriginList(origins);
 
   render(page(), document.body);
-    }
+}
 
 const page = () => html`
   ${inputField(inputText, onInputTextChange, onAddClick)}
+  ${errorField(errorMessage)}
   ${originList(origins, onDeleteOriginClicked)} 
 `;
 
-const inputField = (inputText: string, onInputTextChange: (ev: InputEvent) => void, onAddClick: () => void) => html`
+const errorField = (error: string) => html`
+  ${
+    error.length > 0 ?
+      html`
+        <div class="err">
+          ${unsafeSVG(ICON_ERROR)}
+          <span class="err-text">
+            ${error}
+          </span>
+        </div>
+      `
+    :
+      html``
+  }
+`;
+
+const inputField = (inputText: string, onInputTextChange: (ev: InputEvent) => void, onAddClick: (ev: MouseEvent) => void) => html`
   <form novalidate class="origin-input-box">
     <label class="origin-input-label" for="origin-input">Enter new origin</label>
 
     <div class="origin-input-wrapper">
-      <input id="origin-input" required placeholder="https://hoppscotch.io" class="origin-input" .value=${inputText} @change=${onInputTextChange}></input>
+      <input id="origin-input" required placeholder="${placeholderURL}" class="origin-input" .value=${inputText} @input=${onInputTextChange}></input>
       <button class="origin-add" type="submit" @click=${onAddClick}>
         ${unsafeSVG(ICON_ADD)}
         <span class="button-text">Add</span>
@@ -99,4 +131,18 @@ getOriginList().then((list) => {
   origins = list;
 
   render(page(), document.body); 
+});
+
+chrome.tabs.query({ active: true }, (result) => {
+  if (result.length > 0) {
+    try {
+      if (result[0].url) {
+        const url = new URL(result[0].url);
+        placeholderURL = url.origin;
+
+        render(page(), document.body);
+      }
+    } catch (_e) {
+    }
+  }
 });

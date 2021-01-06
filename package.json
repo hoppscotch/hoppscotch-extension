@@ -1,6 +1,6 @@
 {
   "name": "hoppscotch-extension",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "Provides more features to the Hoppscotch webapp (https://postwoman.io/)",
   "main": "index.js",
   "scripts": {

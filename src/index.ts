@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins";
 
 let cancelSource = axios.CancelToken.source();
 
@@ -162,4 +163,41 @@ chrome.runtime.onMessage.addListener((message: PWChromeMessage<any>, _sender, se
     cancelRequest();
     return true;
   }
+});
+
+
+let originList: string[] = [];
+
+chrome.storage.sync.get((items) => {
+  originList = JSON.parse(items["originList"]);
+});
+
+chrome.storage.onChanged.addListener((changes, _areaName) => {
+  if (changes.originList && changes.originList.newValue) {
+    originList = JSON.parse(changes.originList.newValue);
+  }
+});
+
+chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
+  const url = new URL(tab.url);
+  if (originList.includes(url.origin)) {
+    chrome.tabs.sendMessage(tab.id, {
+      action: '__POSTWOMAN_EXTENSION_PING__'
+    }, (_response: boolean) => {
+      if (chrome.runtime.lastError) {
+        chrome.tabs.executeScript(tab.id, {
+          file: "contentScript.js"
+        });
+      } else {
+        console.log("Already hooked");
+      }
+    });
+
+  }
+});
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.sync.set({
+    originList: JSON.stringify(DEFAULT_ORIGIN_LIST)
+  }, () => {});
 });

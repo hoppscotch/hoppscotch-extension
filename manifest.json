@@ -12,31 +12,14 @@
     "scripts": [ "index.js" ],
     "persistent": false
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://hoppscotch.io/",
-        "https://hoppscotch.io/*",
-        "https://hoppscotch.netlify.com/*",
-        "https://hoppscotch.netlify.com/",
-        "https://postwoman.io/",
-        "https://postwoman.io/*",
-        "https://postwoman.netlify.com/*",
-        "https://postwoman.netlify.com/"
-      ],
-      "js": [ "contentScript.js" ]
-    }
-  ],
+  "browser_action": {
+    "default_title": "Hoppscotch Extension",
+    "default_popup": "popup.html"
+  },
   "permissions": [
-    "*://*/*",
-    "https://hoppscotch.io/",
-    "https://hoppscotch.io/*",
-    "https://hoppscotch.netlify.com/*",
-    "https://hoppscotch.netlify.com/",
-    "https://postwoman.io/",
-    "https://postwoman.io/*",
-    "https://postwoman.netlify.com/*",
-    "https://postwoman.netlify.com/"
+    "storage",
+    "tabs",
+    "<all_urls>"
   ],
   "applications": {
     "gecko": {

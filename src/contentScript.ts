@@ -41,3 +41,9 @@ document.documentElement.appendChild(script);
 script.parentNode.removeChild(script);
 
 console.log(`Connected to Hoppscotch Browser Extension v${VERSION.major}.${VERSION.minor}`);
+
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg.action === '__POSTWOMAN_EXTENSION_PING__') {
+    sendResponse(true);
+  }
+});

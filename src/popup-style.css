@@ -1,0 +1,122 @@
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/Poppins-Bold.ttf") format("truetype");
+}
+
+body {
+  background-color: #202124;
+  width: 30rem;
+  height: 35rem;
+  color: white;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.err {
+  background-color: #fe4645bb;
+  color: white;
+  display: flex;
+  padding: 0.4rem;
+  border-radius: 3px;
+}
+
+.err-text {
+  padding: 0 0.4rem;
+}
+
+.origin-input:focus, .origin-input:hover {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.origin-input {
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border: 0;
+  border-radius: 2px;
+  font-family: 'Poppins';
+  display: flex;
+  flex: 1;
+}
+
+.origin-input-wrapper {
+  display: flex;
+}
+
+.origin-input-label {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 8px;
+  display: flex;
+  font-size: 0.7rem;
+}
+
+.origin-list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  max-height: 500px;
+}
+
+.origin-add {
+  background-color: #31c48d;
+  color: rgba(0, 0, 0, 0.82);
+  border-radius: 2px;
+  padding: 4px 12px;
+  outline: none;
+  font-weight: bold;
+  border: 0;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.origin-delete {
+  cursor: pointer;
+  background-color: transparent;
+  color: #fe4645;
+  border-radius: 2px;
+  padding: 4px 12px;
+  outline: none;
+  border: 0;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.origin-delete:disabled {
+  color: #ffffff55;
+  cursor: auto;
+}
+
+.button-text {
+  margin-left: 2px;
+}
+
+.origin-list-entry {
+  display: flex;
+  padding: 4px 0;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.origin-list-entry-origin {
+  flex: 1;
+  display: flex;
+}

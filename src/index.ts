@@ -179,20 +179,22 @@ chrome.storage.onChanged.addListener((changes, _areaName) => {
 });
 
 chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
-  const url = new URL(tab.url);
-  if (originList.includes(url.origin)) {
-    chrome.tabs.sendMessage(tab.id, {
-      action: '__POSTWOMAN_EXTENSION_PING__'
-    }, (_response: boolean) => {
-      if (chrome.runtime.lastError) {
-        chrome.tabs.executeScript(tab.id, {
-          file: "contentScript.js"
-        });
-      } else {
-        console.log("Already hooked");
-      }
-    });
+  if (tab.status !== "loading") {
+    const url = new URL(tab.url);
+    if (originList.includes(url.origin)) {
+      chrome.tabs.sendMessage(tab.id, {
+        action: '__POSTWOMAN_EXTENSION_PING__'
+      }, (_response: boolean) => {
+        if (chrome.runtime.lastError) {
+          chrome.tabs.executeScript(tab.id, {
+            file: "contentScript.js"
+          });
+        } else {
+          console.log("Already hooked");
+        }
+      });
 
+    }
   }
 });
 

@@ -1,6 +1,28 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins";
 
+
+axios.interceptors.request.use(
+  config => {
+    (config as any).timeData = { startTime: new Date().getTime() };
+    return config;
+  }
+  , 
+  error => {
+    return Promise.reject(error);
+  }
+)
+
+axios.interceptors.response.use(
+  response => {
+    (response.config as any).timeData.endTime = new Date().getTime();
+    return response;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+)
+
 let cancelSource = axios.CancelToken.source();
 
 function errorToObject(e: any) {
@@ -32,7 +54,7 @@ interface PWChromeMessage<T> {
 }
 
 interface RecvRequestMessageData {
-  response: AxiosResponse<any> | null;
+  response: any;
   error: any | null;
   isBinary: boolean;
 }
@@ -94,7 +116,8 @@ const handleSendRequestMessage = async (config: any) => {
             status: r.status,
             statusText: r.statusText,
             headers: r.headers,
-            data: bufferToBase64(r.data)
+            data: bufferToBase64(r.data),
+            timeData: (r.config as any).timeData
           },
           isBinary: true,
           error: null
@@ -132,7 +155,8 @@ const handleSendRequestMessage = async (config: any) => {
             status: res.status,
             statusText: res.statusText,
             headers: res.headers,
-            data: res.data
+            data: res.data,
+            timeData: (res.config as any).timeData
           },
           isBinary: false,
           error: null

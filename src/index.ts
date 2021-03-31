@@ -116,6 +116,7 @@ const handleSendRequestMessage = async (config: any) => {
             status: r.status,
             statusText: r.statusText,
             headers: r.headers,
+            responseURL: r.request.responseURL,
             data: bufferToBase64(r.data),
             timeData: (r.config as any).timeData
           },
@@ -155,6 +156,7 @@ const handleSendRequestMessage = async (config: any) => {
             status: res.status,
             statusText: res.statusText,
             headers: res.headers,
+            responseURL: res.request.responseURL,
             data: res.data,
             timeData: (res.config as any).timeData
           },

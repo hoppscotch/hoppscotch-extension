@@ -11,7 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chrome": "0.0.141",
-    "@types/node": "^15.3.0",
+    "@types/node": "^15.6.0",
     "copyfiles": "^2.4.1",
     "parcel-bundler": "^1.12.5",
     "rimraf": "^3.0.2",

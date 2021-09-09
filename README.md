@@ -9,7 +9,7 @@
 <br />
 This extension currently provides the following features to Hoppscotch.
 
-- Overrides CORS restrictions for cross-origin requests.
+- Overrides CORS restrictions for cross-origin requests (it allows requests against localhost).
 
 
 ### Building & Experimentation

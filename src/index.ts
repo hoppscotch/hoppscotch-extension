@@ -99,6 +99,8 @@ const removeRequestCookies: () => Promise<void> = async () => {
         name,
       });
     }
+
+    cookiesToDelete = {};
   }
 };
 

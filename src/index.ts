@@ -74,33 +74,57 @@ const convertDataURLToBlob = (dataurl: string) => {
   return blob;
 }
 
-const parseCookie: (str: string) => { [property: string]: string } = (str) =>
+const parseCookieString: (str: string) => { [property: string]: string } = (
+  str
+) =>
   str
     .split(";")
-    .map((v) => v.split("="))
-    .reduce((acc, v) => {
-      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+    .map((value) => value.split("="))
+    .reduce((acc, curr) => {
+      if (!!curr[0] && !!curr[1]) {
+        acc[decodeURIComponent(curr[0].trim())] = decodeURIComponent(
+          curr[1].trim()
+        );
+      }
       return acc;
     }, {} as { [property: string]: string });
 
-const processRequestCookies: (reqConfig: any) => Promise<AxiosRequestConfig> = async (reqConfig) => {
-  const cookie = Object.entries(reqConfig.headers || {})
-    .find(([header]) => header.toLowerCase() === "cookie")
-
-  if (!!cookie && !!reqConfig.url && typeof cookie[1] === "string") {
-    const parsedCookies = parseCookie(cookie[1]);
-
-    for (const [name, value] of Object.entries(parsedCookies)) {
-      await chrome.cookies.set({
-        url: reqConfig.url,
+// keep track of the cookies we have to delete after the request is made
+let cookiesToDelete: { url?: string; cookies?: string[] } = {};
+const removeRequestCookies: () => Promise<void> = async () => {
+  if (!!cookiesToDelete.url && !!cookiesToDelete.cookies) {
+    for (const name of cookiesToDelete.cookies) {
+      await chrome.cookies.remove({
+        url: cookiesToDelete.url,
         name,
-        value,
       });
     }
   }
+};
 
-  return reqConfig;
-}
+const processRequestCookies: (reqConfig: any) => Promise<AxiosRequestConfig> =
+  async (reqConfig) => {
+
+    const cookie = Object.entries(reqConfig.headers || {}).find(
+      ([header]) => header.toLowerCase() === "cookie"
+    );
+
+    if (!!cookie && !!reqConfig.url && typeof cookie[1] === "string") {
+      cookiesToDelete = { url: reqConfig.url, cookies: [] };
+      const parsedCookies = parseCookieString(cookie[1]);
+
+      for (const [name, value] of Object.entries(parsedCookies)) {
+        await chrome.cookies.set({
+          url: reqConfig.url,
+          name,
+          value,
+        });
+        cookiesToDelete.cookies.push(name);
+      }
+    }
+
+    return reqConfig;
+  };
 
 const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (reqConfig) => {
   if (reqConfig.formData || reqConfig.formFiles) {
@@ -122,10 +146,12 @@ const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (reqConfi
   return reqConfig as AxiosRequestConfig;
 }
 
-const processRequest: (reqConfig: any) => Promise<AxiosRequestConfig> = async (reqConfig) => {
+const processRequest: (reqConfig: any) => Promise<AxiosRequestConfig> = async (
+  reqConfig
+) => {
   await processRequestCookies(reqConfig);
   return processRequestFormData(reqConfig);
-}
+};
 
 function bufferToBase64(buffer: any) {
   return btoa(new Uint8Array(buffer).reduce((data, byte)=> {
@@ -135,9 +161,11 @@ function bufferToBase64(buffer: any) {
 
 const handleSendRequestMessage = async (config: any) => {
   try {
+    const processedConfig = await processRequest(config);
+
     if (config.wantsBinary) {
       const r = await axios({
-        ...(await processRequest(config)),
+        ...processedConfig,
         cancelToken: cancelSource.token,
         responseType: 'arraybuffer'
       });
@@ -159,7 +187,7 @@ const handleSendRequestMessage = async (config: any) => {
       };
     } else {
       const res = await axios({
-        ...(await processRequest(config)),
+        ...processedConfig,
         
         cancelToken: cancelSource.token,
 
@@ -206,6 +234,9 @@ const handleSendRequestMessage = async (config: any) => {
         error: errorToObject(e)
       }
     };
+  } finally {
+    // remove the cookies set for this request
+    await removeRequestCookies();
   }
 }
 

@@ -1,6 +1,8 @@
-import { readFileSync } from "fs"
+const fs = require("fs")
 
-const hookContent = readFileSync(__dirname + "/hookContent.js", "utf-8");
+const hookContent = fs.readFileSync(__dirname + "/hookContent.js", {
+  encoding: "utf-8"
+});
 
 window.addEventListener('message', ev => {
   if (ev.source !== window || !ev.data) {

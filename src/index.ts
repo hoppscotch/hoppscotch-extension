@@ -74,6 +74,60 @@ const convertDataURLToBlob = (dataurl: string) => {
   return blob;
 }
 
+const parseCookieString: (str: string) => { [property: string]: string } = (
+  str
+) =>
+  str
+    .split(";")
+    .map((value) => value.split("="))
+    .reduce((acc, curr) => {
+      if (!!curr[0] && !!curr[1]) {
+        acc[decodeURIComponent(curr[0].trim())] = decodeURIComponent(
+          curr[1].trim()
+        );
+      }
+      return acc;
+    }, {} as { [property: string]: string });
+
+// keep track of the cookies we have to delete after the request is made
+let cookiesToDelete: { url?: string; cookies?: string[] } = {};
+const removeRequestCookies: () => Promise<void> = async () => {
+  if (!!cookiesToDelete.url && !!cookiesToDelete.cookies) {
+    for (const name of cookiesToDelete.cookies) {
+      await chrome.cookies.remove({
+        url: cookiesToDelete.url,
+        name,
+      });
+    }
+
+    cookiesToDelete = {};
+  }
+};
+
+const processRequestCookies: (reqConfig: any) => Promise<AxiosRequestConfig> =
+  async (reqConfig) => {
+
+    const cookie = Object.entries(reqConfig.headers || {}).find(
+      ([header]) => header.toLowerCase() === "cookie"
+    );
+
+    if (!!cookie && !!reqConfig.url && typeof cookie[1] === "string") {
+      cookiesToDelete = { url: reqConfig.url, cookies: [] };
+      const parsedCookies = parseCookieString(cookie[1]);
+
+      for (const [name, value] of Object.entries(parsedCookies)) {
+        await chrome.cookies.set({
+          url: reqConfig.url,
+          name,
+          value,
+        });
+        cookiesToDelete.cookies.push(name);
+      }
+    }
+
+    return reqConfig;
+  };
+
 const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (reqConfig) => {
   if (reqConfig.formData || reqConfig.formFiles) {
     const form = new FormData();
@@ -94,6 +148,13 @@ const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (reqConfi
   return reqConfig as AxiosRequestConfig;
 }
 
+const processRequest: (reqConfig: any) => Promise<AxiosRequestConfig> = async (
+  reqConfig
+) => {
+  await processRequestCookies(reqConfig);
+  return processRequestFormData(reqConfig);
+};
+
 function bufferToBase64(buffer: any) {
   return btoa(new Uint8Array(buffer).reduce((data, byte)=> {
     return data + String.fromCharCode(byte);
@@ -102,9 +163,11 @@ function bufferToBase64(buffer: any) {
 
 const handleSendRequestMessage = async (config: any) => {
   try {
+    const processedConfig = await processRequest(config);
+
     if (config.wantsBinary) {
       const r = await axios({
-        ...processRequestFormData(config),
+        ...processedConfig,
         cancelToken: cancelSource.token,
         responseType: 'arraybuffer'
       });
@@ -126,7 +189,7 @@ const handleSendRequestMessage = async (config: any) => {
       };
     } else {
       const res = await axios({
-        ...processRequestFormData(config),
+        ...processedConfig,
         
         cancelToken: cancelSource.token,
 
@@ -173,6 +236,9 @@ const handleSendRequestMessage = async (config: any) => {
         error: errorToObject(e)
       }
     };
+  } finally {
+    // remove the cookies set for this request
+    await removeRequestCookies();
   }
 }
 

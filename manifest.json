@@ -19,6 +19,7 @@
   "permissions": [
     "storage",
     "tabs",
+    "cookies",
     "<all_urls>"
   ],
   "applications": {

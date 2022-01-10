@@ -10,7 +10,7 @@
   "author": "Andrew Bastin",
   "license": "MIT",
   "devDependencies": {
-    "@types/chrome": "^0.0.161",
+    "@types/chrome": "^0.0.175",
     "@types/node": "^16.11.5",
     "copyfiles": "^2.4.1",
     "parcel-bundler": "^1.12.5",

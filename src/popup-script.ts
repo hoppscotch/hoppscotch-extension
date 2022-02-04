@@ -144,6 +144,7 @@ chrome.tabs.query({ active: true }, (result) => {
         const url = new URL(result[0].url);
         if (url && url.origin) {
           placeholderURL = url.origin;
+          inputText = url.origin;
         }
 
         render(page(), document.body);

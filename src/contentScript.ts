@@ -34,7 +34,7 @@ window.addEventListener('message', ev => {
   }
 });
 
-const VERSION = { major: 0, minor: 22 };
+const VERSION = { major: 0, minor: 23 };
 
 const script = document.createElement('script');
 script.textContent = hookContent;

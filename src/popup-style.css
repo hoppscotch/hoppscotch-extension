@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/Inter-Regular.ttf") format("truetype");
+  src: url("./Inter-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("/Inter-Bold.ttf") format("truetype");
+  src: url("./Inter-Bold.ttf") format("truetype");
 }
 
 body {

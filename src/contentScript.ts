@@ -28,8 +28,6 @@ function getOriginList(): Promise<string[]> {
  */
 chrome.storage.onChanged.addListener((changes, _areaName) => {
   if (changes.originList && changes.originList.newValue) {
-    let originList = JSON.parse(changes.originList.newValue)
-
     injectHoppExtensionHook()
   }
 })

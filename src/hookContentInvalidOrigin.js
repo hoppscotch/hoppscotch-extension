@@ -1,12 +1,4 @@
 ;(() => {
-  if (window.__HOPP_EXTENSION_STATUS_PROXY__) {
-    window.__HOPP_EXTENSION_STATUS_PROXY__.status = "unknown-origin"
-  } else {
-    window.__HOPP_EXTENSION_STATUS_PROXY__ = defineSubscribableObject({
-      status: "unknown-origin",
-    })
-  }
-
   const defineSubscribableObject = (obj) =>
     new Proxy(
       {
@@ -34,4 +26,12 @@
         },
       }
     )
+
+  if (window.__HOPP_EXTENSION_STATUS_PROXY__) {
+    window.__HOPP_EXTENSION_STATUS_PROXY__.status = "unknown-origin"
+  } else {
+    window.__HOPP_EXTENSION_STATUS_PROXY__ = defineSubscribableObject({
+      status: "unknown-origin",
+    })
+  }
 })()

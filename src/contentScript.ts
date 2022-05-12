@@ -23,6 +23,17 @@ function getOriginList(): Promise<string[]> {
   })
 }
 
+/**
+ * when an origin is added or removed,reevaluate the hook
+ */
+chrome.storage.onChanged.addListener((changes, _areaName) => {
+  if (changes.originList && changes.originList.newValue) {
+    let originList = JSON.parse(changes.originList.newValue)
+
+    injectHoppExtensionHook()
+  }
+})
+
 async function injectHoppExtensionHook() {
   let originList = await getOriginList()
 

@@ -31,7 +31,7 @@ const getOriginList = () =>
   })
 
 const storeOriginList = (originList: string[]) =>
-  new Promise((resolve, _) => {
+  new Promise<void>((resolve, _) => {
     chrome.storage.sync.set(
       {
         originList: JSON.stringify(originList),

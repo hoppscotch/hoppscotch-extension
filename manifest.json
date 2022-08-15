@@ -31,5 +31,6 @@
     "gecko": {
       "id": "postwoman-firefox@postwoman.io"
     }
-  }
+  },
+  "web_accessible_resources": ["*.js.map"]
 }

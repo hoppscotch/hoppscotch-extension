@@ -86,10 +86,6 @@ window.addEventListener("message", (ev) => {
 
 const VERSION = { major: 0, minor: 24 }
 
-console.log(
-  `Connected to Hoppscotch Browser Extension v${VERSION.major}.${VERSION.minor}`
-)
-
 injectHoppExtensionHook()
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {

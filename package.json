@@ -1,6 +1,6 @@
 {
   "name": "hoppscotch-extension",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Provides more features to the Hoppscotch webapp (https://hoppscotch.io/)",
   "scripts": {
     "clean": "rimraf dist",
@@ -13,7 +13,7 @@
     "@parcel/core": "^2.4.0",
     "@parcel/transformer-raw": "^2.4.0",
     "@types/chrome": "^0.0.180",
-    "@types/node": "^17.0.23",
+    "@types/node": "^18.7.8",
     "buffer": "^6.0.3",
     "copyfiles": "^2.4.1",
     "parcel": "^2.4.0",

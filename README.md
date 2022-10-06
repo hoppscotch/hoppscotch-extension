@@ -2,7 +2,7 @@
 
 <a href="https://chrome.google.com/webstore/detail/hoppscotch-browser-extens/amknoiejhlmhancpahfcfcfhllgkpbld">![Get the add-on](https://storage.googleapis.com/chrome-gcs-uploader.appspot.com/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png)</a>
 
-<a href="https://addons.mozilla.org/en-US/firefox/addon/hoppscotch/">![Get the add-on](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)</a>
+<a href="https://addons.mozilla.org/en-US/firefox/addon/hoppscotch/">![Get the add-on](https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/addons/files/2015/11/get-the-addon.png)</a>
 
 **Haven't tried Hoppscotch yet ? Try it at [https://hoppscotch.io/](https://hoppscotch.io/)**
 

@@ -301,8 +301,9 @@ chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
       },
       (_response: boolean) => {
         if (chrome.runtime.lastError) {
-          chrome.tabs.executeScript(tab.id, {
-            file: "contentScript.js",
+          chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ["contentScript.js"],
           })
         } else {
           console.log("Already hooked")

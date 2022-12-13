@@ -321,3 +321,20 @@ chrome.runtime.onInstalled.addListener(() => {
     () => {}
   )
 })
+
+chrome.runtime.onMessage.addListener((message, sender) => {
+  if (message.type && message.type == "execute_hook" && sender.tab.id) {
+    const files =
+      message.origin_type == "VALID_ORIGIN"
+        ? ["hookContent.js"]
+        : ["hookContentInvalidOrigin.js"]
+
+    chrome.scripting.executeScript({
+      target: {
+        tabId: sender.tab.id,
+      },
+      files,
+      world: "MAIN",
+    })
+  }
+})

@@ -8,6 +8,8 @@ type HoppExtensionRequestMeta = {
   }
 }
 
+let abortController = new AbortController()
+
 const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
   Object.entries(headers).reduce((fetchHeaders, [key, value]): HeadersInit => {
     // setting content-type when using fetch will break the upload unless we provide a proper boundary.
@@ -35,15 +37,13 @@ async function fetchUsingAxiosConfig(
     },
     method: axiosConfig.method,
     body: axiosConfig.data,
+    signal: abortController.signal,
   })
 
   requestMeta.timeData.endTime = new Date().getTime()
 
   return [res, requestMeta]
 }
-)
-
-let cancelSource = axios.CancelToken.source()
 
 function errorToObject(e: any) {
   if (e.response && e.response.data) {
@@ -302,8 +302,7 @@ const handleSendRequestMessage = async (config: any) => {
 }
 
 const cancelRequest = () => {
-  cancelSource.cancel()
-  cancelSource = axios.CancelToken.source()
+  abortController.abort()
 }
 
 chrome.runtime.onMessage.addListener(

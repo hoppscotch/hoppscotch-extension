@@ -1,24 +1,42 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
+import { AxiosRequestConfig, AxiosRequestHeaders } from "axios"
 import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins"
 
-axios.interceptors.request.use(
-  (config) => {
-    ;(config as any).timeData = { startTime: new Date().getTime() }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
+type HoppExtensionRequestMeta = {
+  timeData?: {
+    startTime?: number
+    endTime?: number
   }
-)
+}
 
-axios.interceptors.response.use(
-  (response) => {
-    ;(response.config as any).timeData.endTime = new Date().getTime()
-    return response
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
+const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
+  Object.entries(headers).reduce((fetchHeaders, [key, value]): HeadersInit => {
+    return {
+      ...fetchHeaders,
+      [key]: value.toString(),
+    }
+  }, <HeadersInit>{})
+
+async function fetchUsingAxiosConfig(
+  axiosConfig: AxiosRequestConfig<any>
+): Promise<[Response, HoppExtensionRequestMeta]> {
+  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(axiosConfig.headers)
+
+  const requestMeta: HoppExtensionRequestMeta = { timeData: {} }
+  requestMeta.timeData.startTime = new Date().getTime()
+
+  // TODO: check different examples with axios body
+  const res = await fetch(axiosConfig.url, {
+    headers: {
+      ...fetchHeaders,
+    },
+    method: axiosConfig.method,
+    body: axiosConfig.data,
+  })
+
+  requestMeta.timeData.endTime = new Date().getTime()
+
+  return [res, requestMeta]
+}
 )
 
 let cancelSource = axios.CancelToken.source()
@@ -178,17 +196,46 @@ function bufferToBase64(buffer: any) {
   )
 }
 
+const processDataBasedOnContentType = async (
+  data: string,
+  contentTypeHeader: string
+) => {
+  if (
+    contentTypeHeader &&
+    (contentTypeHeader.startsWith("application/json") ||
+      contentTypeHeader.startsWith("application/vnd.api+json") ||
+      contentTypeHeader.startsWith("application/hal+json"))
+  ) {
+    try {
+      data = JSON.parse(data)
+    } catch (e) {}
+  }
+}
+
+const getAllFetchResponseHeaders = (
+  fetchHeaders: Headers
+): Record<string, string> => {
+  const headers: Record<string, string> = {}
+
+  fetchHeaders.forEach((value, key) => {
+    headers[key] = value
+  })
+
+  return headers
+}
+
 const handleSendRequestMessage = async (config: any) => {
   try {
     const processedConfig = await processRequest(config)
 
     if (config.wantsBinary) {
-      const r = await axios({
+      const [r, requestMeta] = await fetchUsingAxiosConfig({
         ...processedConfig,
-        cancelToken: cancelSource.token,
         responseType: "arraybuffer",
         validateStatus: () => true,
       })
+
+      let headers = getAllFetchResponseHeaders(r.headers)
 
       return <PWChromeMessage<RecvRequestMessageData>>{
         messageType: "recv-req",
@@ -196,53 +243,40 @@ const handleSendRequestMessage = async (config: any) => {
           response: {
             status: r.status,
             statusText: r.statusText,
-            headers: r.headers,
-            responseURL: r.request.responseURL,
-            data: bufferToBase64(r.data),
-            timeData: (r.config as any).timeData,
+            headers,
+            responseURL: r.url,
+            data: bufferToBase64(await r.arrayBuffer()),
+            timeData: requestMeta.timeData,
           },
           isBinary: true,
           error: null,
         },
       }
     } else {
-      const res = await axios({
+      const [res, requestMeta] = await fetchUsingAxiosConfig({
         ...processedConfig,
-
-        cancelToken: cancelSource.token,
-        validateStatus: () => true,
-        transformResponse: [
-          (data, headers) => {
-            if (
-              headers["content-type"] &&
-              (headers["content-type"].startsWith("application/json") ||
-                headers["content-type"].startsWith(
-                  "application/vnd.api+json"
-                ) ||
-                headers["content-type"].startsWith("application/hal+json"))
-            ) {
-              try {
-                const jsonData = JSON.parse(data)
-                return jsonData
-              } catch (e) {
-                return data
-              }
-            }
-
-            return data
-          },
-        ],
       })
+
+      const resText = await res.text()
+      const contentTypeHeader = res.headers.get("content-type")
+
+      const data = await processDataBasedOnContentType(
+        resText,
+        contentTypeHeader
+      )
+
+      let headers = getAllFetchResponseHeaders(res.headers)
+
       return <PWChromeMessage<RecvRequestMessageData>>{
         messageType: "recv-req",
         data: {
           response: {
             status: res.status,
             statusText: res.statusText,
-            headers: res.headers,
-            responseURL: res.request.responseURL,
-            data: res.data,
-            timeData: (res.config as any).timeData,
+            headers,
+            responseURL: res.url,
+            data: data,
+            timeData: requestMeta.timeData,
           },
           isBinary: false,
           error: null,

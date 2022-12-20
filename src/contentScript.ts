@@ -2,9 +2,6 @@ export type HOOK_MESSAGE = {
   type: "execute_hook"
   origin_type: "VALID_ORIGIN" | "UNKNOWN_ORIGIN"
 }
-)
-
-type HookType = "valid_origin" | "unknown-origin"
 
 function getOriginList(): Promise<string[]> {
   return new Promise((resolve, reject) => {

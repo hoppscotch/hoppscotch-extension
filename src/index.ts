@@ -10,10 +10,14 @@ type HoppExtensionRequestMeta = {
 
 const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
   Object.entries(headers).reduce((fetchHeaders, [key, value]): HeadersInit => {
-    return {
-      ...fetchHeaders,
-      [key]: value.toString(),
-    }
+    // setting content-type when using fetch will break the upload unless we provide a proper boundary.
+    // but we omit that header and browser will set the correct boundary itself.
+    return key == "content-type" && headers[key] == "multipart/form-data"
+      ? { ...fetchHeaders }
+      : {
+          ...fetchHeaders,
+          [key]: value.toString(),
+        }
   }, <HeadersInit>{})
 
 async function fetchUsingAxiosConfig(

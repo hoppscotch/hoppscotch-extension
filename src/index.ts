@@ -187,6 +187,7 @@ const handleSendRequestMessage = async (config: any) => {
         ...processedConfig,
         cancelToken: cancelSource.token,
         responseType: "arraybuffer",
+        validateStatus: () => true,
       })
 
       return <PWChromeMessage<RecvRequestMessageData>>{
@@ -209,7 +210,7 @@ const handleSendRequestMessage = async (config: any) => {
         ...processedConfig,
 
         cancelToken: cancelSource.token,
-
+        validateStatus: () => true,
         transformResponse: [
           (data, headers) => {
             if (

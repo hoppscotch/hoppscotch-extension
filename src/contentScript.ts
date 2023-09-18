@@ -1,17 +1,7 @@
-const fs = require("fs")
-
-const hookContent = fs.readFileSync(__dirname + "/hookContent.js", {
-  encoding: "utf-8",
-})
-
-const hookContentInvalidOrigin = fs.readFileSync(
-  __dirname + "/hookContentInvalidOrigin.js",
-  {
-    encoding: "utf-8",
-  }
-)
-
-type HookType = "valid_origin" | "unknown-origin"
+export type HOOK_MESSAGE = {
+  type: "execute_hook"
+  origin_type: "VALID_ORIGIN" | "UNKNOWN_ORIGIN"
+}
 
 function getOriginList(): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -37,12 +27,12 @@ async function injectHoppExtensionHook() {
 
   let url = new URL(window.location.href)
 
-  const script = document.createElement("script")
-  script.textContent = originList.includes(url.origin)
-    ? hookContent
-    : hookContentInvalidOrigin
-  document.documentElement.appendChild(script)
-  script.parentNode.removeChild(script)
+  chrome.runtime.sendMessage(<HOOK_MESSAGE>{
+    type: "execute_hook",
+    origin_type: originList.includes(url.origin)
+      ? "VALID_ORIGIN"
+      : "UNKNOWN_ORIGIN",
+  })
 }
 
 window.addEventListener("message", (ev) => {
@@ -84,7 +74,7 @@ window.addEventListener("message", (ev) => {
   }
 })
 
-const VERSION = { major: 0, minor: 25 }
+const VERSION = { major: 0, minor: 26 }
 
 injectHoppExtensionHook()
 

@@ -4,7 +4,7 @@
   "description": "Provides more features to the Hoppscotch webapp (https://hoppscotch.io/)",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npx parcel build src/* --dist-dir dist/ && npx copyfiles manifest.json dist && npx copyfiles icons/* dist"
+    "build": "pnpm exec parcel build src/* --dist-dir dist/ && pnpm exec copyfiles manifest.json dist && pnpm exec copyfiles icons/* dist"
   },
   "author": "Andrew Bastin",
   "license": "MIT",

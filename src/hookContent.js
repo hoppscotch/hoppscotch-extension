@@ -36,7 +36,7 @@
   }
 
   window.__POSTWOMAN_EXTENSION_HOOK__ = {
-    getVersion: () => ({ major: 0, minor: 26 }),
+    getVersion: () => ({ major: 0, minor: 27 }),
 
     decodeB64ToArrayBuffer: (input, ab) => {
       const keyStr =

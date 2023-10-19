@@ -98,7 +98,7 @@ window.addEventListener("message", (ev) => {
   }
 })
 
-const VERSION = { major: 0, minor: 26 }
+const VERSION = { major: 0, minor: 27 }
 
 injectHoppExtensionHook()
 

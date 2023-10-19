@@ -1,9 +1,6 @@
 import { AxiosRequestConfig, AxiosRequestHeaders } from "axios"
 import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins"
 
-import { hookFunc } from "./hookContent"
-import { noHookFunc } from "./hookContentInvalidOrigin"
-
 type HoppExtensionRequestMeta = {
   timeData?: {
     startTime?: number
@@ -369,17 +366,11 @@ chrome.runtime.onMessage.addListener((message, sender) => {
         ? ["hookContent.js"]
         : ["hookContentInvalidOrigin.js"]
 
-    const func = message.origin_type == "VALID_ORIGIN" ? hookFunc : noHookFunc
-
-    console.log(func)
-    console.log(files)
-
     chrome.scripting.executeScript({
       target: {
         tabId: sender.tab.id,
       },
-      func: func,
-      args: [],
+      files,
       world: "MAIN",
     })
   }

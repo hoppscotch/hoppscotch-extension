@@ -10,21 +10,21 @@
   "author": "Andrew Bastin",
   "license": "MIT",
   "devDependencies": {
-    "@parcel/config-default": "^2.10.0",
-    "@parcel/core": "^2.10.0",
     "@parcel/plugin": "^2.10.0",
-    "@parcel/transformer-raw": "^2.10.0",
-    "@types/chrome": "^0.0.246",
+    "@parcel/config-default": "^2.10.3",
+    "@parcel/core": "^2.10.3",
+    "@parcel/transformer-raw": "^2.10.3",
+    "@types/chrome": "^0.0.253",
     "@types/node": "^17.0.23",
     "buffer": "^6.0.3",
     "copyfiles": "^2.4.1",
-    "parcel": "^2.10.0",
+    "parcel": "^2.10.3",
     "process": "^0.11.10",
     "rimraf": "^5.0.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "dependencies": {
-    "axios": "^1.5.1",
-    "lit-html": "^3.0.0"
+    "axios": "^1.6.2",
+    "lit-html": "^3.1.0"
   }
 }

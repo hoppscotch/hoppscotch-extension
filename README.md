@@ -16,10 +16,11 @@ This extension provides the following features to Hoppscotch:
 > If you want to use the extension anywhere outside [the official Hoppscotch instance](https://hoppscotch.io) you may want to add the domain to the extension's origin list. You can access the origin list by clicking on the extension icon on your browser toolbar.
 
 ### Development
+We use [pnpm](https://pnpm.io) as our package manager. Please install it before proceeding.
 
 - Clone the repo
-- Run `npm install`
-- Run `npm run build` to generate the *dist* folder
+- Run `pnpm install`
+- Run `pnpm run build:chrome` or `pnpm run build:firefox` depending on your browser to generate the *dist* folder
 - Install the extension using your browser's install options (a quick Google search will yield the methods)
 
 Hoppscotch is built with the help of an amazing group of people.

@@ -2,11 +2,6 @@
   "background": {
     "scripts": ["index.js"]
   },
-  "applications": {
-    "gecko": {
-      "id": "postwoman-firefox@postwoman.io"
-    }
-  },
   "browser_specific_settings": {
     "gecko": {
       "id": "postwoman-firefox@postwoman.io"

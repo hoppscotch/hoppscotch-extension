@@ -19,6 +19,9 @@ devDependencies:
   '@parcel/core':
     specifier: ^2.10.0
     version: 2.10.0
+  '@parcel/plugin':
+    specifier: ^2.10.0
+    version: 2.10.0(@parcel/core@2.10.0)
   '@parcel/transformer-raw':
     specifier: ^2.10.0
     version: 2.10.0(@parcel/core@2.10.0)

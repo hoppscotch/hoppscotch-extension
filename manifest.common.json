@@ -1,15 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Hoppscotch Browser Extension",
-  "version": "0.26",
+  "version": "0.27",
   "description": "Provides more capabilities for Hoppscotch",
   "icons": {
     "16": "icons/icon-16x16.png",
     "48": "icons/icon-48x48.png",
     "128": "icons/icon-128x128.png"
-  },
-  "background": {
-    "service_worker": "index.js"
   },
   "action": {
     "default_title": "Hoppscotch Extension",
@@ -17,16 +14,6 @@
   },
   "permissions": ["storage", "tabs", "cookies", "scripting"],
   "host_permissions": ["<all_urls>"],
-  "applications": {
-    "gecko": {
-      "id": "postwoman-firefox@postwoman.io"
-    }
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "postwoman-firefox@postwoman.io"
-    }
-  },
   "web_accessible_resources": [
     {
       "resources": ["*.js.map"],

@@ -24,7 +24,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "axios": "^1.5.1",
+    "axios": "^1.6.2",
     "lit-html": "^3.0.0"
   }
 }

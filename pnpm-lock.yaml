@@ -38,8 +38,8 @@ devDependencies:
     specifier: ^2.4.1
     version: 2.4.1
   parcel:
-    specifier: ^2.10.0
-    version: 2.10.0(typescript@5.2.2)
+    specifier: ^2.10.3
+    version: 2.10.3(typescript@5.2.2)
   process:
     specifier: ^0.11.10
     version: 0.11.10
@@ -215,6 +215,20 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/bundler-default@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-a+yq8zH8mrg6FBgUjrC+r3z6cfK7dQVMNzduEU/LF52Z4FVAmTR8gefl/YGmAbquJL3PFAHdhICrljYnQ1WQkg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/graph': 3.0.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      '@parcel/utils': 2.10.3
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/cache@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-4FzZpMTAAEFE65+O+Cf7f5kLLWRCiA+04IJdDYyQG5YzW1WujKXzrbh8B6tSSlw712dsQ/cUqNW4O0Q3FFKrfw==}
     engines: {node: '>= 12.0.0'}
@@ -228,8 +242,28 @@ packages:
       lmdb: 2.8.5
     dev: true
 
+  /@parcel/cache@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-fNNOFOl4dwOlzP8iAa+evZ+3BakX0sV+3+PiYA0zaps7EmPmkTSGDhCWzaYRSO8fhmNDlrUX9Xh7b/X738LFqA==}
+    engines: {node: '>= 12.0.0'}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/fs': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/logger': 2.10.3
+      '@parcel/utils': 2.10.3
+      lmdb: 2.8.5
+    dev: true
+
   /@parcel/codeframe@2.10.0:
     resolution: {integrity: sha512-hHp457tddXEWrOgHHaA/NtkOhOAyt4mpBUzhnPbWDONLu5xeg1mu1Jffiu2rlw5xajhphrUFDWyJW0/xq1815g==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      chalk: 4.1.2
+    dev: true
+
+  /@parcel/codeframe@2.10.3:
+    resolution: {integrity: sha512-70ovUzeXBowDMjK+1xaLT4hm3jZUK7EbaCS6tN1cmmr0S1TDhU7g37jnpni+u9de9Lc/lErwTaDVXUf9WSQzQw==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       chalk: 4.1.2
@@ -240,6 +274,15 @@ packages:
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/compressor-raw@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-5SUZ80uwu7o0D+0RjhjBnSUXJRgaayfqVQtBRP3U7/W/Bb1Ixm1yDGXtDlyCbzimWqWVMMJ4/eVCEW7I8Ln4Bw==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -293,6 +336,55 @@ packages:
       - uncss
     dev: true
 
+  /@parcel/config-default@2.10.3(@parcel/core@2.10.3)(typescript@5.2.2):
+    resolution: {integrity: sha512-gHVw5cKZVA9h/J4E33qQLg3QG3cYMyWVruyVzF8dFy/Rar5ebXMof1f38IhR2BIavpoThbnCnxgD4SVK8xOPag==}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/bundler-default': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/compressor-raw': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/core': 2.10.3
+      '@parcel/namer-default': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/optimizer-css': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/optimizer-htmlnano': 2.10.3(@parcel/core@2.10.3)(typescript@5.2.2)
+      '@parcel/optimizer-image': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/optimizer-svgo': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/optimizer-swc': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/packager-css': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/packager-html': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/packager-js': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/packager-raw': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/packager-svg': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/packager-wasm': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/reporter-dev-server': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/resolver-default': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/runtime-browser-hmr': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/runtime-js': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/runtime-react-refresh': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/runtime-service-worker': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-babel': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-css': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-html': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-image': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-js': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-json': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-postcss': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-posthtml': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-raw': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-react-refresh-wrap': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/transformer-svg': 2.10.3(@parcel/core@2.10.3)
+    transitivePeerDependencies:
+      - '@swc/helpers'
+      - cssnano
+      - postcss
+      - purgecss
+      - relateurl
+      - srcset
+      - terser
+      - typescript
+      - uncss
+    dev: true
+
   /@parcel/core@2.10.0:
     resolution: {integrity: sha512-8jvLhLC2503HIBphJe/C1qL3bfiTSw6WgIDH0e7B8EL0v7v2JYnlTZ8o9myf+bMAxzwNLiZ2uEDCri9EWbi4tQ==}
     engines: {node: '>= 12.0.0'}
@@ -324,6 +416,37 @@ packages:
       semver: 7.5.4
     dev: true
 
+  /@parcel/core@2.10.3:
+    resolution: {integrity: sha512-b64FdqJi4CX6iWeLZNfmwdTrC1VLPXHMuFusf1sTZTuRBFw2oRpgJvuiqsrInaZ82o3lbLMo4a9/5LtNaZKa+Q==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@mischnic/json-sourcemap': 0.1.1
+      '@parcel/cache': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/events': 2.10.3
+      '@parcel/fs': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/graph': 3.0.3
+      '@parcel/logger': 2.10.3
+      '@parcel/package-manager': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/profiler': 2.10.3
+      '@parcel/rust': 2.10.3
+      '@parcel/source-map': 2.1.1
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
+      abortcontroller-polyfill: 1.7.5
+      base-x: 3.0.9
+      browserslist: 4.22.1
+      clone: 2.1.2
+      dotenv: 7.0.0
+      dotenv-expand: 5.1.0
+      json5: 2.2.3
+      msgpackr: 1.9.9
+      nullthrows: 1.1.1
+      semver: 7.5.4
+    dev: true
+
   /@parcel/diagnostic@2.10.0:
     resolution: {integrity: sha512-ibr+sUZLc0MW75b+nThOa6YEi9QXTNYbUNCo067mtMIfhKNYTx24DaiGzDWgy1Yv49eucBaQ4u7gFI2Qa98uIA==}
     engines: {node: '>= 12.0.0'}
@@ -332,8 +455,21 @@ packages:
       nullthrows: 1.1.1
     dev: true
 
+  /@parcel/diagnostic@2.10.3:
+    resolution: {integrity: sha512-Hf3xG9UVkDABDXWi89TjEP5U1CLUUj81kx/QFeupBXnzt5GEQZBhkxdBq6+4w17Mmuvk7H5uumNsSptkWq9PCA==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@mischnic/json-sourcemap': 0.1.1
+      nullthrows: 1.1.1
+    dev: true
+
   /@parcel/events@2.10.0:
     resolution: {integrity: sha512-mhykJBnP3BPMI6A9hLZmTtmNHZuE+HGzsF6vzmA2YBuU3/BGlQUmxdObsmwQ1O24eq0EfJVwTM+R/bdu+/nFrA==}
+    engines: {node: '>= 12.0.0'}
+    dev: true
+
+  /@parcel/events@2.10.3:
+    resolution: {integrity: sha512-I3FsZYmKzgvo1f6frUWdF7hWwpeWTshPrFqpn9ICDXs/1Hjlf32jNXLBqon9b9XUDfMw4nSRMFMzMLJpbdheGA==}
     engines: {node: '>= 12.0.0'}
     dev: true
 
@@ -351,8 +487,29 @@ packages:
       '@parcel/workers': 2.10.0(@parcel/core@2.10.0)
     dev: true
 
+  /@parcel/fs@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-0w4+Lc7B5VpwqX4GQfjnI5qN7tc9qbGPSPsf/6U2YPWU4dkGsMfPEmLBx7dZvJy3UiGxpsjMMuRHa14+jJ5QrQ==}
+    engines: {node: '>= 12.0.0'}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/rust': 2.10.3
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      '@parcel/watcher': 2.3.0
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
+    dev: true
+
   /@parcel/graph@3.0.0:
     resolution: {integrity: sha512-8Lussud6gWRM3Mysu+veBRsBdSlWgkM8y7PvF8AiRwEY2eiVxZ3Rgh8o9KJau3B8R8q+lyCaUElYpbnUT6Bkiw==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      nullthrows: 1.1.1
+    dev: true
+
+  /@parcel/graph@3.0.3:
+    resolution: {integrity: sha512-zUA8KsjR2+v2Q2bFBF7zBk33ejriDiRA/+LK5QE8LrFpkaDa+gjkx76h2x7JqGXIDHNos446KX4nz2OUCVwrNQ==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       nullthrows: 1.1.1
@@ -366,8 +523,23 @@ packages:
       '@parcel/events': 2.10.0
     dev: true
 
+  /@parcel/logger@2.10.3:
+    resolution: {integrity: sha512-mAVTA0NgbbwEUzkzjBqjqyBBax+8bscRaZIAsEqMiSFWGcUmRgwVlH/jy3QDkFc7OHzwvdPK+XlMLV7s/3DJNw==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/events': 2.10.3
+    dev: true
+
   /@parcel/markdown-ansi@2.10.0:
     resolution: {integrity: sha512-fuOuFglNANegE2nqVURwOJ/HzKM28O0hqy120Gl0NTbCAFbG34WCFxfkmVio8fondD4NcZcDj5GGv5P5TWcTIg==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      chalk: 4.1.2
+    dev: true
+
+  /@parcel/markdown-ansi@2.10.3:
+    resolution: {integrity: sha512-uzN1AJmp1oYh/ZLdD9WA7xP5u/L3Bs/6AFZz5s695zus74RCx9OtQcF0Yyl1hbKVJDfuw9WFuzMfPL/9p/C5DQ==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       chalk: 4.1.2
@@ -384,6 +556,17 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/namer-default@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-s7kgB/x7TISIHhen9IK4+CBXgmRJYahVS+oiAbMm18vcUVuXeZDBeTedOco6zUQIKuB71vx/4DBIuiIp6Q9hpg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/node-resolver-core@3.1.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-0KBdWIXCpnDzjoZgc1qHhgxtNe5CZ4r4+Iht+LExacXwG1A1O5qKLQE1bBAgcjqkgv1iglVuMx0kVe9G8oob8A==}
     engines: {node: '>= 12.0.0'}
@@ -393,6 +576,21 @@ packages:
       '@parcel/fs': 2.10.0(@parcel/core@2.10.0)
       '@parcel/rust': 2.10.0
       '@parcel/utils': 2.10.0
+      nullthrows: 1.1.1
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/node-resolver-core@3.1.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-o7XK1KiK3ymO39bhc5qfDQiZpKA1xQmKg0TEPDNiLIXHKLEBheqarhw3Nwwt9MOFibfwsisQtDTIS+2v9A640A==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@mischnic/json-sourcemap': 0.1.1
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/fs': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      '@parcel/utils': 2.10.3
       nullthrows: 1.1.1
       semver: 7.5.4
     transitivePeerDependencies:
@@ -414,11 +612,47 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/optimizer-css@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-Pc8jwV3U9w5DJDNcRQML5FlKdpPGnuCTtk1P+9FfyEUjdxoVxC+YeMIQcE961clAgl47qh7eNObXtsX/lb04Dg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/source-map': 2.1.1
+      '@parcel/utils': 2.10.3
+      browserslist: 4.22.1
+      lightningcss: 1.22.0
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/optimizer-htmlnano@2.10.0(@parcel/core@2.10.0)(typescript@5.2.2):
     resolution: {integrity: sha512-uYmluYpyyVumY7d/aHkGnFVLzOHoGqzVF9os/PkqVOnGEQ3qQibO3Hl9neTtm2GEUgeOfq1lrXLEfpW/k3qG1w==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
+      htmlnano: 2.0.4(svgo@2.8.0)(typescript@5.2.2)
+      nullthrows: 1.1.1
+      posthtml: 0.16.6
+      svgo: 2.8.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+      - cssnano
+      - postcss
+      - purgecss
+      - relateurl
+      - srcset
+      - terser
+      - typescript
+      - uncss
+    dev: true
+
+  /@parcel/optimizer-htmlnano@2.10.3(@parcel/core@2.10.3)(typescript@5.2.2):
+    resolution: {integrity: sha512-KTIZOy19tYeG0j3JRv435A6jnTh3O1LPhsUfo6Xlea7Cz1yUUxAANl9MG8lHZKYbZCFFKbfk2I9QBycmcYxAAw==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
       htmlnano: 2.0.4(svgo@2.8.0)(typescript@5.2.2)
       nullthrows: 1.1.1
       posthtml: 0.16.6
@@ -449,6 +683,20 @@ packages:
       '@parcel/workers': 2.10.0(@parcel/core@2.10.0)
     dev: true
 
+  /@parcel/optimizer-image@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-hbeI6+GoddJxib8MlK5iafbCm1oy3p0UL9bb8s5mjTZiHtj1PORlH8gP7mT1WlYOCgoy45QdHelcrmL9fJ8kBA==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      '@parcel/utils': 2.10.3
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
+    dev: true
+
   /@parcel/optimizer-svgo@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-2IXClEpjlafidKAiOh/+amdDWOHGtA4Sil/3flmhLkjNFh7z2bGTYodO5xvC3Umw6N11fPNL1Wch1jn54fMO1g==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -456,6 +704,18 @@ packages:
       '@parcel/diagnostic': 2.10.0
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/utils': 2.10.0
+      svgo: 2.8.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/optimizer-svgo@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-STN7sdjz6wGnQnvy22SkQaLi5C1E+j7J0xy96T0/mCP9KoIsBDE7panCtf53p4sWCNRsXNVrXt5KrpCC+u0LHg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       svgo: 2.8.0
     transitivePeerDependencies:
       - '@parcel/core'
@@ -469,6 +729,21 @@ packages:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/source-map': 2.1.1
       '@parcel/utils': 2.10.0
+      '@swc/core': 1.3.92
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+      - '@swc/helpers'
+    dev: true
+
+  /@parcel/optimizer-swc@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-Cxy05CysiKbv/PtX++ETje4cbhCJySmN6EmFyQBs0jvzsUdWwqnsttavYRoMviUUK9mjm/i5q+cyewBO/8Oc5g==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/source-map': 2.1.1
+      '@parcel/utils': 2.10.3
       '@swc/core': 1.3.92
       nullthrows: 1.1.1
     transitivePeerDependencies:
@@ -493,6 +768,23 @@ packages:
       semver: 7.5.4
     dev: true
 
+  /@parcel/package-manager@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-KqOW5oUmElrcb7d+hOC68ja1PI2qbPZTwdduduRvB90DAweMt7r1046+W2Df5bd+p9iv72DxGEn9xomX+qz9MA==}
+    engines: {node: '>= 12.0.0'}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/fs': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/logger': 2.10.3
+      '@parcel/node-resolver-core': 3.1.3(@parcel/core@2.10.3)
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
+      semver: 7.5.4
+    dev: true
+
   /@parcel/packager-css@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-BY1PoPPOngiJ6gFD+mUQ6YZvwDxlth8oCU9328T8kFwhmA4qL6pfIxNPI1I53Ig5f38tf1nhFkHACDCbs4MxaQ==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -506,6 +798,19 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/packager-css@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-Jk165fFU2XyWjN7agKy+YvvRoOJbWIb57VlVDgBHanB5ptS7aCildambrljGNTivatr+zFrchE5ZDNUFXZhYnw==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/source-map': 2.1.1
+      '@parcel/utils': 2.10.3
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/packager-html@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-EtxQwuQXQ6zrPRG9/pIdIcvuDCzBEsAnjN9kZ+XuxEYGoReX7weN4oALA6gCnw3w7U4cq6+VR1R08F6Cd8T2MQ==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -513,6 +818,19 @@ packages:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/types': 2.10.0(@parcel/core@2.10.0)
       '@parcel/utils': 2.10.0
+      nullthrows: 1.1.1
+      posthtml: 0.16.6
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/packager-html@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-bEI6FhBvERuoqyi/h681qGImTRBUnqNW4sKoFO67q/bxWLevXtEGMFOeqridiVOjYQH9s1kKwM/ln/UwKVazZw==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       nullthrows: 1.1.1
       posthtml: 0.16.6
     transitivePeerDependencies:
@@ -535,11 +853,36 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/packager-js@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-SjLSDw0juC7bEk/0geUtSVXaZqm2SgHL2IZaPnkoBQxVqzh2MdvAxJCrS2LxiR/cuQRfvQ5bnoJA7Kk1w2VNAg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      '@parcel/source-map': 2.1.1
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      globals: 13.23.0
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/packager-raw@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-fk1XGqMP38uyWC1Jqg8/Mp1x0dLxfd9GnmLHQCUZ0OSQLwF9Nqpow1WR4tC8juxYNK5haGqKyL9X5pVN4KLNYQ==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/packager-raw@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-d236tnP2ViOnUJR0+qG6EHw7MUWSA14fLKnYYzL5SRQ4BVo5XC+CM9HKN5O4YCCVu3+9Su2X1+RESo5sxbFq7w==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -556,11 +899,32 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/packager-svg@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-Rk/GokkNs9uLwiy6Ux/xXpD8nMVhA9LN9eIbVqi8+eR42xUmICmEoUoSm+CnekkXxY2a5e3mKpL7JZbT9vOEhA==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      posthtml: 0.16.6
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/packager-wasm@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-G/OsV9Xpyu1D/mTwazw4FkWlFotcFMaRmejmc6km3+qjaFxMubRBLCNMCvGw2lDIhA40qz/DpZS/kblB/FGSPA==}
     engines: {node: '>=12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/packager-wasm@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-j6VmU84LKy+XRHgZQFoASG98P50a9tkeT3LYRrol3RGGQrvx7PT3/D6rOqbnQjR2iGnaHzYoAlgg9jIMmWXYiA==}
+    engines: {node: '>=12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -574,6 +938,15 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/plugin@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-FgsfGKSdtSV1EcO2NWFCZaY14W0PnEEF8vZaRCTML3vKfUbilYs/biaqf5geFOu4DwRuCC8unOTqFy7dLwcK/A==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/profiler@2.10.0:
     resolution: {integrity: sha512-SGkslseYA5TQOb8Z7gepi7YiIv3uH4BYAM9nwduMZrRZENcICbgTh1Pb+dp10y+6k9hFFH748eHtxJqSWARDBw==}
     engines: {node: '>= 12.0.0'}
@@ -583,13 +956,22 @@ packages:
       chrome-trace-event: 1.0.3
     dev: true
 
-  /@parcel/reporter-cli@2.10.0(@parcel/core@2.10.0):
-    resolution: {integrity: sha512-+OtZUdmHFgNY8+w3/U7dEZKMTtIFh7EiFw5VelKIGdvJrZNa9j7vbFuZziK6zUW2uopCk4qsDinn6Rfi7M16KA==}
-    engines: {node: '>= 12.0.0', parcel: ^2.10.0}
+  /@parcel/profiler@2.10.3:
+    resolution: {integrity: sha512-yikaM6/vsvjDCcBHAXTKmDsWUF3UvC0lMG8RpnuVSN+R40MGH1vyrR4vNnqhkiCcs0RkVXm7bpuz3cDJLNLYSQ==}
+    engines: {node: '>= 12.0.0'}
     dependencies:
-      '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/types': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/utils': 2.10.0
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/events': 2.10.3
+      chrome-trace-event: 1.0.3
+    dev: true
+
+  /@parcel/reporter-cli@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-p5xQTPRuB1K3eI3Ro90vcdxpdt0VqIgrUP/VJKtSI8I3fLLGgPBNmSZejqqLup3jFRzUttQPHYkWl/R14LHjAQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       chalk: 4.1.2
       term-size: 2.2.1
     transitivePeerDependencies:
@@ -606,12 +988,22 @@ packages:
       - '@parcel/core'
     dev: true
 
-  /@parcel/reporter-tracer@2.10.0(@parcel/core@2.10.0):
-    resolution: {integrity: sha512-mlxF3ozH6Kys4hewG1Bze1q8wHJL1ue276Qek9xPJly8ed08wU7rPGZF0vz8fJfKT8vx+nGvnKFXYiHjF+w6bg==}
-    engines: {node: '>= 12.0.0', parcel: ^2.10.0}
+  /@parcel/reporter-dev-server@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-1Kzb2TrlnOYhGwFXZYCeoO18hpVhI3pRXnN22li9ZmdpeugZ0zZJamfPV8Duj4sBvBoSajbZhiPAe/6tQgWDSA==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
     dependencies:
-      '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/utils': 2.10.0
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/reporter-tracer@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-53T9VPJvCi4Co0iTmNN+nqFD+Fkt3QFW8CPXBVlmlQzOtufVjDb01VsE1NPD8/J7O0jd548HJX/s5uqT0380jg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       chrome-trace-event: 1.0.3
       nullthrows: 1.1.1
     transitivePeerDependencies:
@@ -628,12 +1020,32 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/resolver-default@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-TQc1LwpvEKyF3CnU9ifHOKV2usFLVYmMAVAkxyKKGTbnJGEqBDQ0ITqTapA6bJLvZ6d2eUT7guqd4nrBEjeZpw==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/node-resolver-core': 3.1.3(@parcel/core@2.10.3)
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/runtime-browser-hmr@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-x22HHUAFuhycE/NGowkEaR7zeZsp8PcViHkmuNkSvLboe8PJvq4BFpnd+RUj+o8EjN31p+8K2pFqS1hYAmtdwg==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/utils': 2.10.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/runtime-browser-hmr@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-+6+mlJiLL3aNVIEyXMUPbPSgljYgnbl9JNMbEXikDQpGGiXTZ7gNNKsqwYeYzgQBYwgqRfR2ir6Bznc2R7dvxg==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -645,6 +1057,18 @@ packages:
       '@parcel/diagnostic': 2.10.0
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/utils': 2.10.0
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/runtime-js@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-EMLgZzBGf5ylOT5U/N2rBK5ZZxnmEM4aJsissEAxcE/2cgE8TyhSng6p3A88vVJlO/unHcwRuFGlxKCueugGsQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       nullthrows: 1.1.1
     transitivePeerDependencies:
       - '@parcel/core'
@@ -662,6 +1086,18 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/runtime-react-refresh@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-l03mni8XJq3fmeAV8UYlKJ/+u0LYRuk6ZVP0VLYLwgK4O0mlRuxwaZWYUeB8r/kTsEjB3gF/9AAtUZdAC7Swow==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      react-error-overlay: 6.0.9
+      react-refresh: 0.9.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/runtime-service-worker@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-vi84PwAsyPI1P/5FTt1uNKjH1NGizQRdS4CmjBMz+VBT6GVuXMgZ9iQy3OYC8MsiyHlyG7mScftI74RWqw1DDg==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -673,8 +1109,24 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/runtime-service-worker@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-NjhS80t+O5iBgKXIQ+i07ZEh/VW8XHzanwTHmznJXEoIjLoBpELZ9r6bV/eUD3mYgM1vmW9Aijdu5xtsd0JW6A==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/rust@2.10.0:
     resolution: {integrity: sha512-9J7riqPI8mVlFSDphK9kVUH8nFQgeMbO/95Ycf4vaEOVE1ICQo1h18WHAy2DndmL1uSd/UTimirrP6yLt/I3KA==}
+    engines: {node: '>= 12.0.0'}
+    dev: true
+
+  /@parcel/rust@2.10.3:
+    resolution: {integrity: sha512-s1dD1QI/6JkWLICsFh8/iUvO7W1aj/avx+2mCSzuwEIsMywexpBf56qhVYMa3D9D50hS1h5FMk9RrSnSiPf8WA==}
     engines: {node: '>= 12.0.0'}
     dev: true
 
@@ -701,6 +1153,22 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/transformer-babel@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-SDTyDZX3WTkX7WS5Dg5cBLjWtIkUeeHezIjeOI4cw40tBjj5bXRR2TBfPsqwOnpTHr5jhNSicD6DN+XfTI2MMw==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/source-map': 2.1.1
+      '@parcel/utils': 2.10.3
+      browserslist: 4.22.1
+      json5: 2.2.3
+      nullthrows: 1.1.1
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/transformer-css@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-hITticpUE/qilpsTc7HQP04qhXwyUSKGZKgcFnvf8+BJO/LoclbVK1nzbR61eYl5Jhj1XB67p3tCt5fSvPhOsQ==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -709,6 +1177,21 @@ packages:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/source-map': 2.1.1
       '@parcel/utils': 2.10.0
+      browserslist: 4.22.1
+      lightningcss: 1.22.0
+      nullthrows: 1.1.1
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/transformer-css@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-qlPYcwVgbqFHrec6CKcTQ4hY7EkjvH40Wyqf0xjAyIoIuOPmrpSUOp+VKjeRdbyFwH/4GBjrDZMBvCUsgeM2GA==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/source-map': 2.1.1
+      '@parcel/utils': 2.10.3
       browserslist: 4.22.1
       lightningcss: 1.22.0
       nullthrows: 1.1.1
@@ -733,6 +1216,23 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/transformer-html@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-u0uklWpliEcPADtBlboxhxBvlGrP0yPRZk/A2iL0VhfAi9ONFEuJkEoesispNhAg3KiojEh0Ddzu7bYp9U0yww==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      nullthrows: 1.1.1
+      posthtml: 0.16.6
+      posthtml-parser: 0.10.2
+      posthtml-render: 3.0.0
+      semver: 7.5.4
+      srcset: 4.0.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/transformer-image@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-qbNyAJvzqdO/OnHhCOoPAZN5aBD/xphyXvDNI0Fb3UPEr5MQtAnzv2lS1I63s4rKpphBntWj7nEIAio6s7c5bw==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -743,6 +1243,19 @@ packages:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/utils': 2.10.0
       '@parcel/workers': 2.10.0(@parcel/core@2.10.0)
+      nullthrows: 1.1.1
+    dev: true
+
+  /@parcel/transformer-image@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-At7D7eMauE+/EnlXiDfNSap2te11L0TIW55SC9iTRTI/CqesWfT96ZB/LcH3HXckYy/GJi0xyTjYxC/YjUqDog==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
       nullthrows: 1.1.1
     dev: true
 
@@ -766,11 +1279,41 @@ packages:
       semver: 7.5.4
     dev: true
 
+  /@parcel/transformer-js@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-9pGqrCSLlipXvL7hOrLsaW5Pq4bjFBOTiZ5k5kizk1qeuHKMIHxySGdy0E35eSsJ6JzXP0lTXPywMPysSI6owQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      '@parcel/source-map': 2.1.1
+      '@parcel/utils': 2.10.3
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
+      '@swc/helpers': 0.5.3
+      browserslist: 4.22.1
+      nullthrows: 1.1.1
+      regenerator-runtime: 0.13.11
+      semver: 7.5.4
+    dev: true
+
   /@parcel/transformer-json@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-4G6ZIt7IYu1l3BlsL55Hi3869X6KHE0CHybWf364h5ZUmzo3Xpc5i7cziQX+IhWDo1qn1jiziOPGY85LXlo8ug==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
+      json5: 2.2.3
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/transformer-json@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-cPhiQNgrX92VEATuxf3GCPQnlfnZW1iCsOHMT1CzgmofE7tVlW1hOOokWw21/8spG44Zax0SrRW0udi9TdmpQA==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
       json5: 2.2.3
     transitivePeerDependencies:
       - '@parcel/core'
@@ -784,6 +1327,22 @@ packages:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/rust': 2.10.0
       '@parcel/utils': 2.10.0
+      clone: 2.1.2
+      nullthrows: 1.1.1
+      postcss-value-parser: 4.2.0
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/transformer-postcss@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-SpTZQdGQ3aVvl6+3tLlw/txUyzZSsv8t+hcfc9PM0n1rd4mfjWxVKmgNC1Y3nFoSubLMp+03GbMq16ym8t89WQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
+      '@parcel/utils': 2.10.3
       clone: 2.1.2
       nullthrows: 1.1.1
       postcss-value-parser: 4.2.0
@@ -807,11 +1366,35 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/transformer-posthtml@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-k6pz0H/W1k+i9uDNXjum7XkaFYKvSSrgEsmhoh7OriXPrLunboIzMBXFQcQSCyxCpw/kLuKFBLP38mQnYC5BbQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      nullthrows: 1.1.1
+      posthtml: 0.16.6
+      posthtml-parser: 0.10.2
+      posthtml-render: 3.0.0
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/transformer-raw@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-1tR58kqzTh4baLq/++bp84H2lhOoAz8cJeJykgsYImva7aRWcjlTppNKjBF6Ef8etIRMPZOozTdbS53VdQ9IbA==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
     dependencies:
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/transformer-raw@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-r//P2Hg14m/vJK/XJyq0cmcS4RTRy4bPSL4c0FxbEdDRrSm0Hcd1gdfgl0HeqSQQfcz0Xu4nCM5zAhg6FUpiXQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
     transitivePeerDependencies:
       - '@parcel/core'
     dev: true
@@ -827,6 +1410,17 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/transformer-react-refresh-wrap@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-Sc6ExGQy/YhNYFxRgEyi4SikYmV3wbATYo/VzqUjvZ4vE9YXM0sC5CyJhcoWVHmMPhm5eowOwFA6UrTsgHd2+g==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
+      react-refresh: 0.9.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/transformer-svg@2.10.0(@parcel/core@2.10.0):
     resolution: {integrity: sha512-qEZFk4gxyVNhm2V8R3YLo9qCyYNVBySWmZLjmwuhLLmAE+r0qGebc9oXyo7C6ML5d/4Tfj6NriCOeX+HMhPVxw==}
     engines: {node: '>= 12.0.0', parcel: ^2.10.0}
@@ -834,6 +1428,22 @@ packages:
       '@parcel/diagnostic': 2.10.0
       '@parcel/plugin': 2.10.0(@parcel/core@2.10.0)
       '@parcel/rust': 2.10.0
+      nullthrows: 1.1.1
+      posthtml: 0.16.6
+      posthtml-parser: 0.10.2
+      posthtml-render: 3.0.0
+      semver: 7.5.4
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
+  /@parcel/transformer-svg@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-fjkTdPB8y467I/yHPEaNxNxoGtRIgEqNjVkBhtE/ibhF/YfqIEpDlJyI7G5G71pt2peLMLXZnJowzHqeoEUHOQ==}
+    engines: {node: '>= 12.0.0', parcel: ^2.10.3}
+    dependencies:
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/plugin': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/rust': 2.10.3
       nullthrows: 1.1.1
       posthtml: 0.16.6
       posthtml-parser: 0.10.2
@@ -857,6 +1467,20 @@ packages:
       - '@parcel/core'
     dev: true
 
+  /@parcel/types@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-4ISgDKcbJsR7NKj2jquPUPQWc/b2x6zHb/jZVdHVzMQxJp98DX+cvQR137iOTXUAFtwkKVjFcHWfejwGdGf9bw==}
+    dependencies:
+      '@parcel/cache': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/fs': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/package-manager': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/source-map': 2.1.1
+      '@parcel/workers': 2.10.3(@parcel/core@2.10.3)
+      utility-types: 3.10.0
+    transitivePeerDependencies:
+      - '@parcel/core'
+    dev: true
+
   /@parcel/utils@2.10.0:
     resolution: {integrity: sha512-8qx9caJTjli6UKpKlcPjdSBblkwTc+BnIsSK3/7fX7kbtHLmEkQH/RWZbbOJItHbnzlsmaDJTfS7j6rrcFw2Pw==}
     engines: {node: '>= 12.0.0'}
@@ -866,6 +1490,20 @@ packages:
       '@parcel/logger': 2.10.0
       '@parcel/markdown-ansi': 2.10.0
       '@parcel/rust': 2.10.0
+      '@parcel/source-map': 2.1.1
+      chalk: 4.1.2
+      nullthrows: 1.1.1
+    dev: true
+
+  /@parcel/utils@2.10.3:
+    resolution: {integrity: sha512-l9pEQgq+D57t42m2sJkdU08Dpp0HVzDEwVrp/by/l37ZkYPJ2Me3oXtsJhvA+hej2kO8+FuKPm64FaUVaA2g+w==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      '@parcel/codeframe': 2.10.3
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/logger': 2.10.3
+      '@parcel/markdown-ansi': 2.10.3
+      '@parcel/rust': 2.10.3
       '@parcel/source-map': 2.1.1
       chalk: 4.1.2
       nullthrows: 1.1.1
@@ -1014,6 +1652,21 @@ packages:
       '@parcel/profiler': 2.10.0
       '@parcel/types': 2.10.0(@parcel/core@2.10.0)
       '@parcel/utils': 2.10.0
+      nullthrows: 1.1.1
+    dev: true
+
+  /@parcel/workers@2.10.3(@parcel/core@2.10.3):
+    resolution: {integrity: sha512-qlN8G3VybPHVIbD6fsZr2gmrXG2UlROUQIPW/kkAvjQ29uRfFn7YEC8CHTICt8M1HhCNkr0cMXkuXQBi0l3kAg==}
+    engines: {node: '>= 12.0.0'}
+    peerDependencies:
+      '@parcel/core': ^2.10.3
+    dependencies:
+      '@parcel/core': 2.10.3
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/logger': 2.10.3
+      '@parcel/profiler': 2.10.3
+      '@parcel/types': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       nullthrows: 1.1.1
     dev: true
 
@@ -2031,25 +2684,25 @@ packages:
     resolution: {integrity: sha512-9LtiGlPy982CsgxZvJGNNp2/NnrgEr6EAyN3iIEP3/8vd3YLgAZQHbQ75ZrkfBRGrNg37Dk3U6tuVb+B4Xfslg==}
     dev: true
 
-  /parcel@2.10.0(typescript@5.2.2):
-    resolution: {integrity: sha512-YJmWEsiv1ClpPcJiWkr3gFj40sRvfeK89GGGwJjpzQMQsBmN6h6OHrSkByx0jrsPIvdsOIccU702upYpRAypuw==}
+  /parcel@2.10.3(typescript@5.2.2):
+    resolution: {integrity: sha512-Ocx33N4ZVnotJTALhMZ0AqPIE9UN5uP6jjA+lYJ4FlEYuYYZsvOQXZQgeMa62pFj6jrOHWh7ho8uJhRdTNwVyg==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
     peerDependenciesMeta:
       '@parcel/core':
         optional: true
     dependencies:
-      '@parcel/config-default': 2.10.0(@parcel/core@2.10.0)(typescript@5.2.2)
-      '@parcel/core': 2.10.0
-      '@parcel/diagnostic': 2.10.0
-      '@parcel/events': 2.10.0
-      '@parcel/fs': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/logger': 2.10.0
-      '@parcel/package-manager': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/reporter-cli': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/reporter-dev-server': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/reporter-tracer': 2.10.0(@parcel/core@2.10.0)
-      '@parcel/utils': 2.10.0
+      '@parcel/config-default': 2.10.3(@parcel/core@2.10.3)(typescript@5.2.2)
+      '@parcel/core': 2.10.3
+      '@parcel/diagnostic': 2.10.3
+      '@parcel/events': 2.10.3
+      '@parcel/fs': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/logger': 2.10.3
+      '@parcel/package-manager': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/reporter-cli': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/reporter-dev-server': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/reporter-tracer': 2.10.3(@parcel/core@2.10.3)
+      '@parcel/utils': 2.10.3
       chalk: 4.1.2
       commander: 7.2.0
       get-port: 4.2.0

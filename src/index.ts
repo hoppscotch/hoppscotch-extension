@@ -36,7 +36,9 @@ async function fetchUsingAxiosConfig(
       ...fetchHeaders,
     },
     method: axiosConfig.method,
-    body: axiosConfig.data,
+
+    // Ignore the body for GET and HEAD requests to prevent error with axios
+    body: (["get", "head"].includes(axiosConfig.method?.toLowerCase())) ? undefined : axiosConfig.data,
     signal: abortController.signal,
   })
 

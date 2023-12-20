@@ -305,6 +305,9 @@ const handleSendRequestMessage = async (config: any) => {
 
 const cancelRequest = () => {
   abortController.abort()
+
+  // reset the abort controller for the next request
+  abortController = new AbortController()
 }
 
 chrome.runtime.onMessage.addListener(

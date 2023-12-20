@@ -98,8 +98,6 @@ window.addEventListener("message", (ev) => {
   }
 })
 
-const VERSION = { major: 0, minor: 29 }
-
 injectHoppExtensionHook()
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {

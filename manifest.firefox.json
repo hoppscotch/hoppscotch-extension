@@ -1,10 +1,15 @@
 {
   "background": {
-    "scripts": ["index.js"]
+    "scripts": [
+      "index.js"
+    ]
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "postwoman-firefox@postwoman.io"
     }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'"
   }
 }

@@ -1,5 +1,11 @@
 const fs = require("fs")
 
+declare global {
+  interface Window {
+    HOPP_CONTENT_SCRIPT_EXECUTED: boolean
+  }
+}
+
 const hookContent = fs.readFileSync(__dirname + "/hookContent.js", {
   encoding: "utf-8",
 })
@@ -26,15 +32,6 @@ function getOriginList(): Promise<string[]> {
   })
 }
 
-/**
- * when an origin is added or removed,reevaluate the hook
- */
-chrome.storage.onChanged.addListener((changes, _areaName) => {
-  if (changes.originList && changes.originList.newValue) {
-    injectHoppExtensionHook()
-  }
-})
-
 async function injectHoppExtensionHook() {
   let originList = await getOriginList()
 
@@ -59,49 +56,69 @@ async function injectHoppExtensionHook() {
   }
 }
 
-window.addEventListener("message", (ev) => {
-  if (ev.source !== window || !ev.data) {
+function main() {
+  // check if the content script is already injected to avoid  multiple injections side effects
+  if (window.HOPP_CONTENT_SCRIPT_EXECUTED) {
     return
   }
 
-  if (ev.data.type === "__POSTWOMAN_EXTENSION_REQUEST__") {
-    chrome.runtime.sendMessage(
-      {
-        messageType: "send-req",
-        data: ev.data.config,
-      },
-      (message) => {
-        if (message.data.error) {
-          window.postMessage(
-            {
-              type: "__POSTWOMAN_EXTENSION_ERROR__",
-              error: message.data.error,
-            },
-            "*"
-          )
-        } else {
-          window.postMessage(
-            {
-              type: "__POSTWOMAN_EXTENSION_RESPONSE__",
-              response: message.data.response,
-              isBinary: message.data.isBinary,
-            },
-            "*"
-          )
+  window.HOPP_CONTENT_SCRIPT_EXECUTED = true
+
+  /**
+   * when an origin is added or removed,reevaluate the hook
+   */
+  chrome.storage.onChanged.addListener((changes, _areaName) => {
+    if (changes.originList && changes.originList.newValue) {
+      injectHoppExtensionHook()
+    }
+  })
+
+  window.addEventListener("message", (ev) => {
+    if (ev.source !== window || !ev.data) {
+      return
+    }
+
+    if (ev.data.type === "__POSTWOMAN_EXTENSION_REQUEST__") {
+      chrome.runtime.sendMessage(
+        {
+          messageType: "send-req",
+          data: ev.data.config,
+        },
+        (message) => {
+          if (message.data.error) {
+            window.postMessage(
+              {
+                type: "__POSTWOMAN_EXTENSION_ERROR__",
+                error: message.data.error,
+              },
+              "*"
+            )
+          } else {
+            window.postMessage(
+              {
+                type: "__POSTWOMAN_EXTENSION_RESPONSE__",
+                response: message.data.response,
+                isBinary: message.data.isBinary,
+              },
+              "*"
+            )
+          }
         }
-      }
-    )
-  } else if (ev.data.type === "__POSTWOMAN_EXTENSION_CANCEL__") {
-    chrome.runtime.sendMessage({
-      messageType: "cancel-req",
-    })
-  }
-})
+      )
+    } else if (ev.data.type === "__POSTWOMAN_EXTENSION_CANCEL__") {
+      chrome.runtime.sendMessage({
+        messageType: "cancel-req",
+      })
+    }
+  })
 
-injectHoppExtensionHook()
+  injectHoppExtensionHook()
 
-chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
-  if (msg.action === "__POSTWOMAN_EXTENSION_PING__") {
-    sendResponse(true)
-  }
-})
+  chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+    if (msg.action === "__POSTWOMAN_EXTENSION_PING__") {
+      sendResponse(true)
+    }
+  })
+}
+
+main()

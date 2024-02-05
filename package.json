@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
-    "lit-html": "^3.0.0"
+    "lit-html": "^3.1.2"
   }
 }

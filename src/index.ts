@@ -25,7 +25,9 @@ const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
 async function fetchUsingAxiosConfig(
   axiosConfig: AxiosRequestConfig<any>
 ): Promise<[Response, HoppExtensionRequestMeta]> {
-  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(axiosConfig.headers)
+  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(
+    axiosConfig.headers as AxiosRequestHeaders
+  )
 
   const requestMeta: HoppExtensionRequestMeta = { timeData: {} }
   requestMeta.timeData.startTime = new Date().getTime()
@@ -36,9 +38,12 @@ async function fetchUsingAxiosConfig(
       ...fetchHeaders,
     },
     method: axiosConfig.method,
+    credentials: "omit",
 
     // Ignore the body for GET and HEAD requests to prevent error with axios
-    body: (["get", "head"].includes(axiosConfig.method?.toLowerCase())) ? undefined : axiosConfig.data,
+    body: ["get", "head"].includes(axiosConfig.method?.toLowerCase())
+      ? undefined
+      : axiosConfig.data,
     signal: abortController.signal,
   })
 
@@ -115,13 +120,41 @@ const parseCookieString: (str: string) => { [property: string]: string } = (
     }, {} as { [property: string]: string })
 
 // keep track of the cookies we have to delete after the request is made
-let cookiesToDelete: { url?: string; cookies?: string[] } = {}
+let cookiesToDelete: {
+  url?: string
+  cookies?: Record<string, chrome.cookies.Cookie | null>
+} = {}
+
 const removeRequestCookies: () => Promise<void> = async () => {
   if (!!cookiesToDelete.url && !!cookiesToDelete.cookies) {
-    for (const name of cookiesToDelete.cookies) {
-      await chrome.cookies.remove({
-        url: cookiesToDelete.url,
+    for (const [name, originalCookie] of Object.entries(
+      cookiesToDelete.cookies
+    )) {
+      if (originalCookie === null) {
+        await chrome.cookies.remove({
+          url: cookiesToDelete.url,
+          name,
+        })
+        continue
+      }
+
+      const { secure, domain, path } = originalCookie
+      const originalUrl = `${secure ? "https" : "http"}://${domain}${path}`
+
+      // note: we wouldn't have to do deletions if chrome's API didn't throw an error for passing in
+      // unknown properties
+
+      // delete any properties that aren't actually present in a cookie entry
+      // or that will be figured out by the provided url
+      delete originalCookie.hostOnly, originalCookie.domain, originalCookie.path
+
+      // this is determined by whether the expirationDate is present
+      delete originalCookie.session
+
+      await chrome.cookies.set({
+        url: originalUrl,
         name,
+        ...originalCookie,
       })
     }
 
@@ -137,16 +170,22 @@ const processRequestCookies: (
   )
 
   if (!!cookie && !!reqConfig.url && typeof cookie[1] === "string") {
-    cookiesToDelete = { url: reqConfig.url, cookies: [] }
+    cookiesToDelete = { url: reqConfig.url, cookies: {} }
     const parsedCookies = parseCookieString(cookie[1])
 
     for (const [name, value] of Object.entries(parsedCookies)) {
+      // grab the cookie as it currently is in the user's browser so
+      // we can put it back the way it was when the request is done
+      cookiesToDelete.cookies[name] = await chrome.cookies.get({
+        name,
+        url: reqConfig.url,
+      })
+
       await chrome.cookies.set({
         url: reqConfig.url,
         name,
         value,
       })
-      cookiesToDelete.cookies.push(name)
     }
   }
 

@@ -1,8 +1,9 @@
 {
   "name": "hoppscotch-extension",
-  "version": "0.31.0",
+  "version": "0.31.1",
   "description": "Provides more features to the Hoppscotch webapp (https://hoppscotch.io/)",
   "scripts": {
+    "format": "prettier --write .",
     "clean": "rimraf dist .parcel-cache",
     "build:chrome": "HOPP_EXTENSION_TARGET=CHROME parcel build src/* --dist-dir dist/ && copyfiles icons/* dist",
     "build:firefox": "HOPP_EXTENSION_TARGET=FIREFOX parcel build src/* --dist-dir dist/ && copyfiles icons/* dist"

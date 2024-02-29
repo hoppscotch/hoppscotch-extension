@@ -25,7 +25,7 @@ const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
 async function fetchUsingAxiosConfig(
   axiosConfig: AxiosRequestConfig<any>
 ): Promise<[Response, HoppExtensionRequestMeta]> {
-  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(axiosConfig.headers)
+  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(axiosConfig.headers as AxiosRequestHeaders)
 
   const requestMeta: HoppExtensionRequestMeta = { timeData: {} }
   requestMeta.timeData.startTime = new Date().getTime()
@@ -38,7 +38,9 @@ async function fetchUsingAxiosConfig(
     method: axiosConfig.method,
 
     // Ignore the body for GET and HEAD requests to prevent error with axios
-    body: (["get", "head"].includes(axiosConfig.method?.toLowerCase())) ? undefined : axiosConfig.data,
+    body: ["get", "head"].includes(axiosConfig.method?.toLowerCase())
+      ? undefined
+      : axiosConfig.data,
     signal: abortController.signal,
   })
 

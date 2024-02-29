@@ -5,13 +5,10 @@
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
+    "skipLibCheck": true,
     "outDir": "./dist",
-    "types": [ "chrome", "node" ]
+    "types": ["chrome", "node"]
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

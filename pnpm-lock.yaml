@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^0.0.246
     version: 0.0.246
   '@types/node':
-    specifier: ^17.0.23
-    version: 17.0.23
+    specifier: ^20.11.24
+    version: 20.11.24
   buffer:
     specifier: ^6.0.3
     version: 6.0.3
@@ -1179,8 +1179,10 @@ packages:
     resolution: {integrity: sha512-PwBsCBD3lDODn4xpje3Y1di0aDJp4Ww7aSfMRVw6ysnxD4I7Wmq2mBkSKaDtN403hqH5sp6c9xQUvFYY3+lkBg==}
     dev: true
 
-  /@types/node@17.0.23:
-    resolution: {integrity: sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==}
+  /@types/node@20.11.24:
+    resolution: {integrity: sha512-Kza43ewS3xoLgCEpQrsT+xRo/EJej1y0kVYGiLFE1NEODXGzTfwiC6tXTLMQskn1X4/Rjlh0MQUvx9W+L9long==}
+    dependencies:
+      undici-types: 5.26.5
     dev: true
 
   /@types/trusted-types@2.0.4:
@@ -2035,9 +2037,6 @@ packages:
     resolution: {integrity: sha512-YJmWEsiv1ClpPcJiWkr3gFj40sRvfeK89GGGwJjpzQMQsBmN6h6OHrSkByx0jrsPIvdsOIccU702upYpRAypuw==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
-    peerDependenciesMeta:
-      '@parcel/core':
-        optional: true
     dependencies:
       '@parcel/config-default': 2.10.0(@parcel/core@2.10.0)(typescript@5.2.2)
       '@parcel/core': 2.10.0
@@ -2366,6 +2365,10 @@ packages:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
     hasBin: true
+    dev: true
+
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
   /untildify@4.0.0:

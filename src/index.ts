@@ -355,7 +355,7 @@ chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
   }
 })
 
-browser.runtime.onInstalled.addListener((details) => {
+chrome.runtime.onInstalled.addListener((details) => {
   if (!details.reason || details.reason !== 'chrome_update') {
     browser.storage.sync.set(
       {

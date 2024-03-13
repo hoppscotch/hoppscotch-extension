@@ -357,7 +357,7 @@ chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (!details.reason || details.reason !== 'chrome_update') {
-    browser.storage.sync.set(
+    chrome.storage.sync.set(
       {
         originList: JSON.stringify(DEFAULT_ORIGIN_LIST),
       },

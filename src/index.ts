@@ -356,12 +356,16 @@ chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
 })
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set(
-    {
-      originList: JSON.stringify(DEFAULT_ORIGIN_LIST),
-    },
-    () => {}
-  )
+  chrome.storage.sync.get((items) => {
+    if (!items.originList) {
+      chrome.storage.sync.set(
+        {
+          originList: JSON.stringify(DEFAULT_ORIGIN_LIST),
+        },
+        () => {}
+      )
+    }
+  })
 })
 
 chrome.runtime.onMessage.addListener((message, sender) => {

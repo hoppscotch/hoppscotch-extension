@@ -355,15 +355,17 @@ chrome.tabs.onUpdated.addListener((_id, _info, tab) => {
   }
 })
 
-chrome.runtime.onInstalled.addListener((details) => {
-  if (!details.reason || details.reason !== 'chrome_update') {
-    chrome.storage.sync.set(
-      {
-        originList: JSON.stringify(DEFAULT_ORIGIN_LIST),
-      },
-      () => {}
-    )
-  }
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.sync.get((items) => {
+    if (!items.originList) {
+      chrome.storage.sync.set(
+        {
+          originList: JSON.stringify(DEFAULT_ORIGIN_LIST),
+        },
+        () => {}
+      )
+    }
+  })
 })
 
 chrome.runtime.onMessage.addListener((message, sender) => {

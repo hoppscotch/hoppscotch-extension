@@ -30,6 +30,20 @@ async function fetchUsingAxiosConfig(
   const requestMeta: HoppExtensionRequestMeta = { timeData: {} }
   requestMeta.timeData.startTime = new Date().getTime()
 
+  const params = axiosConfig.params
+
+  if (params) {
+    try {
+      const searchParams = new URLSearchParams(axiosConfig.url.split("?")[1])
+      Object.keys(params).forEach((key) => {
+        searchParams.append(key, params[key])
+      })
+
+      axiosConfig.url =
+        axiosConfig.url.split("?")[0] + `?${searchParams.toString()}`
+    } catch (_) {}
+  }
+
   // TODO: check different examples with axios body
   const res = await fetch(axiosConfig.url, {
     headers: {

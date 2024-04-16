@@ -34,13 +34,13 @@ async function fetchUsingAxiosConfig(
 
   if (params) {
     try {
-      const searchParams = new URLSearchParams(axiosConfig.url.split("?")[1])
+      const url = new URL(axiosConfig.url)
+
       Object.keys(params).forEach((key) => {
-        searchParams.append(key, params[key])
+        url.searchParams.append(key, params[key])
       })
 
-      axiosConfig.url =
-        axiosConfig.url.split("?")[0] + `?${searchParams.toString()}`
+      axiosConfig.url = url.toString()
     } catch (_) {}
   }
 

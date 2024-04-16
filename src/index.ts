@@ -32,7 +32,7 @@ async function fetchUsingAxiosConfig(
 
   const params = axiosConfig.params
 
-  if (params) {
+  if (params && Object.keys(params).length > 0) {
     try {
       const url = new URL(axiosConfig.url)
 

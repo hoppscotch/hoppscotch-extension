@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Hoppscotch Browser Extension",
-  "version": "0.34",
+  "version": "0.35",
   "description": "Provides more capabilities for Hoppscotch",
   "icons": {
     "16": "icons/icon-16x16.png",

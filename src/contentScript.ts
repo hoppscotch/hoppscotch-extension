@@ -73,8 +73,15 @@ function main() {
     }
   })
 
-  window.addEventListener("message", (ev) => {
-    if (ev.source !== window || !ev.data) {
+  window.addEventListener("message", async (ev) => {
+    const originList = await getOriginList()
+    let url = new URL(window.location.href)
+
+    const originType = originList.includes(url.origin)
+      ? "VALID_ORIGIN"
+      : "UNKNOWN_ORIGIN"
+
+    if (ev.source !== window || !ev.data || originType != "VALID_ORIGIN") {
       return
     }
 

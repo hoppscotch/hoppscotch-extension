@@ -1,13 +1,12 @@
 import { html, render } from "lit-html"
-import { unsafeSVG } from "lit-html/directives/unsafe-svg"
+import { unsafeSVG } from "lit/directives/unsafe-svg"
+import ICON_ADD from "bundle-text:./add-icon.svg"
+import ICON_DELETE from "bundle-text:./delete-icon.svg"
+import ICON_ERROR from "bundle-text:./error-icon.svg"
 
 import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins"
 
 const fs = require("fs")
-
-const ICON_ADD = fs.readFileSync(__dirname + "/add-icon.svg", "utf8")
-const ICON_DELETE = fs.readFileSync(__dirname + "/delete-icon.svg", "utf8")
-const ICON_ERROR = fs.readFileSync(__dirname + "/error-icon.svg", "utf8")
 
 let origins: string[] = []
 

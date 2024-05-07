@@ -1,21 +1,11 @@
-const fs = require("fs")
+import hookContent from "bundle-text:./hookContent.js"
+import hookContentInvalidOrigin from "bundle-text:./hookContentInvalidOrigin.js"
 
 declare global {
   interface Window {
     HOPP_CONTENT_SCRIPT_EXECUTED: boolean
   }
 }
-
-const hookContent = fs.readFileSync(__dirname + "/hookContent.js", {
-  encoding: "utf-8",
-})
-
-const hookContentInvalidOrigin = fs.readFileSync(
-  __dirname + "/hookContentInvalidOrigin.js",
-  {
-    encoding: "utf-8",
-  }
-)
 
 export type HOOK_MESSAGE = {
   type: "execute_hook"

@@ -1,12 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { DEFAULT_ORIGIN_LIST } from "./defaultOrigins"
 
-const origins = ref([])
+
+const origins = ref<string[]>([])
 const inputText = ref('')
-const placeholderURL = ref('https://hoppscotch.io')
+const placeholderURL = "https://hoppscotch.io"
 const errorMessage = ref('')
-
-const DEFAULT_ORIGIN_LIST = ["https://example.com", "https://another-example.com"]
 
 const getOriginList = () =>
   new Promise((resolve) => {
@@ -20,8 +20,8 @@ const getOriginList = () =>
     })
   })
 
-const storeOriginList = (originList) =>
-  new Promise((resolve) => {
+const storeOriginList = (originList: string[]) =>
+  new Promise<void>((resolve) => {
     chrome.storage.sync.set(
       {
         originList: JSON.stringify(originList),
@@ -32,7 +32,7 @@ const storeOriginList = (originList) =>
     )
   })
 
-const onAddClick = async (event) => {
+const onAddClick = async (event: { preventDefault: () => void; }) => {
   event.preventDefault()
   try {
     const parsedURL = new URL(inputText.value)
@@ -49,19 +49,19 @@ const onAddClick = async (event) => {
   }
 }
 
-const onInputTextChange = (ev) => {
+const onInputTextChange = (ev:any) => {
   inputText.value = ev.target.value
   errorMessage.value = ""
 }
 
-const onDeleteOriginClicked = async (index) => {
+const onDeleteOriginClicked = async (index: number) => {
   origins.value.splice(index, 1)
   await storeOriginList(origins.value)
 }
 
 onMounted(() => {
   getOriginList()
-    .then((list) => {
+    .then((list:any) => {
       origins.value = list
     })
     .catch(() => {
@@ -74,7 +74,6 @@ onMounted(() => {
         if (result[0].url && result[0].url.startsWith("http")) {
           const url = new URL(result[0].url)
           if (url && url.origin) {
-            placeholderURL.value = url.origin
             inputText.value = url.origin
           }
         }
@@ -89,7 +88,7 @@ onMounted(() => {
     <form novalidate class="origin-input-box">
       <label class="origin-input-label" for="origin-input">Enter new origin</label>
       <div class="origin-input-wrapper">
-        <input id="origin-input" required :placeholder="placeholderURL" class="origin-input" v-model="inputText" @input="onInputTextChange">
+        <input id="origin-input" required :placeholder="placeholderURL" class="origin-input" v-model="inputText" @input="(ev: Event) => onInputTextChange(ev)">
         <button class="origin-add" type="submit" @click="onAddClick">
           <img src="./add-icon.svg" alt="Add Icon">
           <span class="button-text">Add</span>

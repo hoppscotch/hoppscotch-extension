@@ -11,12 +11,6 @@ importers:
       axios:
         specifier: ^1.5.1
         version: 1.5.1
-      lit:
-        specifier: ^3.1.3
-        version: 3.1.3
-      lit-html:
-        specifier: ^3.0.0
-        version: 3.0.0
       vue:
         specifier: ^3.4.33
         version: 3.4.33(typescript@5.2.2)
@@ -107,12 +101,6 @@ packages:
 
   '@lezer/lr@1.3.13':
     resolution: {integrity: sha512-RLAbau/4uSzKgIKj96mI5WUtG1qtiR0Frn0Ei9zhPj8YOkHM+1Bb8SgdVvmR/aWJCFIzjo2KFnDiRZ75Xf5NdQ==}
-
-  '@lit-labs/ssr-dom-shim@1.2.0':
-    resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
-
-  '@lit/reactive-element@2.0.4':
-    resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
 
   '@lmdb/lmdb-darwin-arm64@2.8.5':
     resolution: {integrity: sha512-KPDeVScZgA1oq0CiPBcOa3kHIqU+pTOwRFDIhxvmf8CTNvqdZQYp5cCKW0bUk69VygB2PuTiINFWbY78aR2pQw==}
@@ -584,9 +572,6 @@ packages:
 
   '@types/node@17.0.23':
     resolution: {integrity: sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==}
-
-  '@types/trusted-types@2.0.4':
-    resolution: {integrity: sha512-IDaobHimLQhjwsQ/NMwRVfa/yL7L/wriQPMhw1ZJall0KX6E1oxk29XMDeilW5qTIg5aoiqf5Udy8U/51aNoQQ==}
 
   '@vue/compiler-core@3.4.33':
     resolution: {integrity: sha512-MoIREbkdPQlnGfSKDMgzTqzqx5nmEjIc0ydLVYlTACGBsfvOJ4tHSbZXKVF536n6fB+0eZaGEOqsGThPpdvF5A==}
@@ -1214,18 +1199,6 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
-  lit-element@4.0.5:
-    resolution: {integrity: sha512-iTWskWZEtn9SyEf4aBG6rKT8GABZMrTWop1+jopsEOgEcugcXJGKuX5bEbkq9qfzY+XB4MAgCaSPwnNpdsNQ3Q==}
-
-  lit-html@3.0.0:
-    resolution: {integrity: sha512-DNJIE8dNY0dQF2Gs0sdMNUppMQT2/CvV4OVnSdg7BXAsGqkVwsE5bqQ04POfkYH5dBIuGnJYdFz5fYYyNnOxiA==}
-
-  lit-html@3.1.3:
-    resolution: {integrity: sha512-FwIbqDD8O/8lM4vUZ4KvQZjPPNx7V1VhT7vmRB8RBAO0AU6wuTVdoXiu2CivVjEGdugvcbPNBLtPE1y0ifplHA==}
-
-  lit@3.1.3:
-    resolution: {integrity: sha512-l4slfspEsnCcHVRTvaP7YnkTZEZggNFywLEIhQaGhYDczG+tu/vlgm/KaWIEjIp+ZyV20r2JnZctMb8LeLCG7Q==}
-
   lmdb@2.8.5:
     resolution: {integrity: sha512-9bMdFfc80S+vSldBmG3HOuLVHnxRdNTlpzR6QDnzqCQtCzGUEAGTzBKYMeIM+I/sU4oZfgbcbS7X7F65/z/oxQ==}
     hasBin: true
@@ -1629,12 +1602,6 @@ snapshots:
   '@lezer/lr@1.3.13':
     dependencies:
       '@lezer/common': 1.1.0
-
-  '@lit-labs/ssr-dom-shim@1.2.0': {}
-
-  '@lit/reactive-element@2.0.4':
-    dependencies:
-      '@lit-labs/ssr-dom-shim': 1.2.0
 
   '@lmdb/lmdb-darwin-arm64@2.8.5':
     optional: true
@@ -2396,8 +2363,6 @@ snapshots:
 
   '@types/node@17.0.23': {}
 
-  '@types/trusted-types@2.0.4': {}
-
   '@vue/compiler-core@3.4.33':
     dependencies:
       '@babel/parser': 7.24.8
@@ -2825,26 +2790,6 @@ snapshots:
       lightningcss-win32-x64-msvc: 1.22.0
 
   lines-and-columns@1.2.4: {}
-
-  lit-element@4.0.5:
-    dependencies:
-      '@lit-labs/ssr-dom-shim': 1.2.0
-      '@lit/reactive-element': 2.0.4
-      lit-html: 3.1.3
-
-  lit-html@3.0.0:
-    dependencies:
-      '@types/trusted-types': 2.0.4
-
-  lit-html@3.1.3:
-    dependencies:
-      '@types/trusted-types': 2.0.4
-
-  lit@3.1.3:
-    dependencies:
-      '@lit/reactive-element': 2.0.4
-      lit-element: 4.0.5
-      lit-html: 3.1.3
 
   lmdb@2.8.5:
     dependencies:

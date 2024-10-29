@@ -201,10 +201,29 @@ const processRequestFormData: (reqConfig: any) => AxiosRequestConfig = (
   return reqConfig as AxiosRequestConfig
 }
 
+const processBinaryBody: (
+  reqConfig: any
+) => Promise<AxiosRequestConfig> = async (reqConfig) => {
+  if (reqConfig.binaryContent) {
+    const objectURL = reqConfig.binaryContent.objectURL
+
+    const response = await fetch(objectURL)
+
+    const blob = await response.blob()
+
+    reqConfig.data = new File([blob], reqConfig.binaryContent.name, {})
+
+    URL.revokeObjectURL(objectURL)
+  }
+
+  return reqConfig
+}
+
 const processRequest: (reqConfig: any) => Promise<AxiosRequestConfig> = async (
   reqConfig
 ) => {
   await processRequestCookies(reqConfig)
+  await processBinaryBody(reqConfig)
   return processRequestFormData(reqConfig)
 }
 

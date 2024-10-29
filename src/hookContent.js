@@ -36,7 +36,7 @@
   }
 
   window.__POSTWOMAN_EXTENSION_HOOK__ = {
-    getVersion: () => ({ major: 0, minor: 36 }),
+    getVersion: () => ({ major: 0, minor: 37 }),
 
     decodeB64ToArrayBuffer: (input, ab) => {
       const keyStr =
@@ -83,6 +83,17 @@
           reader.onerror = (error) => reject(error)
         })
 
+      if (config.data instanceof File) {
+        config.binaryContent = {
+          name: config.data.name,
+          type: config.data.type,
+          size: config.data.size,
+          // we'll convert the file to a url to access it from the extension
+          objectURL: URL.createObjectURL(config.data),
+        }
+      }
+
+      // TODO: use objectURLs instead of base64
       if (config.data instanceof FormData) {
         config.formFiles = []
         config.formData = []

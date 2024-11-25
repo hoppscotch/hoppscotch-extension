@@ -84,12 +84,14 @@
         })
 
       if (config.data instanceof File) {
-        config.binaryContent = {
-          name: config.data.name,
-          type: config.data.type,
-          size: config.data.size,
-          // we'll convert the file to a url to access it from the extension
-          objectURL: URL.createObjectURL(config.data),
+        // firefox successfully sends the file object as is, but chrome malforms it
+        // so we're using objectURLs to access the file from the extension in chrome
+        if (process.env.HOPP_EXTENSION_TARGET === "CHROME") {
+          config.binaryContent = {
+            name: config.data.name,
+            // we'll convert the file to a url to access it from the extension
+            objectURL: URL.createObjectURL(config.data),
+          }
         }
       }
 

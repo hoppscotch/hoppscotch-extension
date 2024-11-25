@@ -8,6 +8,6 @@
     }
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' blob:;"
+    "extension_pages": "script-src 'self'"
   }
 }

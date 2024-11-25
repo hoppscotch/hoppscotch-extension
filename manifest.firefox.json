@@ -1,8 +1,6 @@
 {
   "background": {
-    "scripts": [
-      "index.js"
-    ]
+    "scripts": ["index.js"]
   },
   "browser_specific_settings": {
     "gecko": {
@@ -10,6 +8,6 @@
     }
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'"
+    "extension_pages": "script-src 'self' blob:;"
   }
 }

@@ -52,7 +52,9 @@ async function fetchUsingAxiosConfig(
     method: axiosConfig.method,
 
     // Ignore the body for GET and HEAD requests to prevent error with axios
-    body: (["get", "head"].includes(axiosConfig.method?.toLowerCase())) ? undefined : axiosConfig.data,
+    body: ["get", "head"].includes(axiosConfig.method?.toLowerCase())
+      ? undefined
+      : axiosConfig.data,
     signal: abortController.signal,
   })
 
@@ -212,8 +214,6 @@ const processBinaryBody: (
     const blob = await response.blob()
 
     reqConfig.data = new File([blob], reqConfig.binaryContent.name, {})
-
-    URL.revokeObjectURL(objectURL)
   }
 
   return reqConfig
@@ -263,7 +263,7 @@ const getAllFetchResponseHeaders = (
   return headers
 }
 
-const handleSendRequestMessage = async (config: any) => {
+const handleSendRequestMessage = async (config: any, tabID?: number) => {
   try {
     const processedConfig = await processRequest(config)
 
@@ -331,6 +331,25 @@ const handleSendRequestMessage = async (config: any) => {
       },
     }
   } finally {
+    // revoke the objectURLs, if any
+    // keeping this as an array, cause in the future, if we're adding support for formdata files in a similar way, we can add those objectURLs here
+    const objectURLsToRevoke: string[] = []
+
+    if (config.binaryContent?.objectURL) {
+      objectURLsToRevoke.push(config.binaryContent.objectURL)
+    }
+
+    if (objectURLsToRevoke.length > 0 && tabID) {
+      chrome.tabs.sendMessage(
+        tabID,
+        {
+          action: "__POSTWOMAN_EXTENSION_REVOKE_OBJECT_URLS__",
+          objectURLsToRevoke,
+        },
+        () => {}
+      )
+    }
+
     // remove the cookies set for this request
     await removeRequestCookies()
   }
@@ -346,7 +365,7 @@ const cancelRequest = () => {
 chrome.runtime.onMessage.addListener(
   (message: PWChromeMessage<any>, _sender, sendResponse) => {
     if (message.messageType === "send-req") {
-      handleSendRequestMessage(message.data).then(sendResponse)
+      handleSendRequestMessage(message.data, _sender.tab.id).then(sendResponse)
       return true
     } else if (message.messageType === "cancel-req") {
       cancelRequest()

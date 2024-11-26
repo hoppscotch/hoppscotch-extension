@@ -114,6 +114,10 @@ function main() {
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (msg.action === "__POSTWOMAN_EXTENSION_PING__") {
       sendResponse(true)
+    } else if (msg.action === "__POSTWOMAN_EXTENSION_REVOKE_OBJECT_URLS__") {
+      msg.objectURLsToRevoke.forEach((objectURL: string) => {
+        URL.revokeObjectURL(objectURL)
+      })
     }
   })
 }

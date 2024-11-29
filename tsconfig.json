@@ -6,11 +6,15 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outDir": "./dist",
-    "types": [ "chrome", "node" ]
+    "types": [ "chrome", "node" ],
+    "target": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "exclude": [
     "node_modules"
   ]

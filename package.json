@@ -4,8 +4,8 @@
   "description": "Provides more features to the Hoppscotch webapp (https://hoppscotch.io/)",
   "scripts": {
     "clean": "rimraf dist .parcel-cache",
-    "build:chrome": "set HOPP_EXTENSION_TARGET=CHROME&& parcel build src/* --dist-dir dist/ --no-optimize && copyfiles icons/* dist",
-    "build:firefox": "set HOPP_EXTENSION_TARGET=FIREFOX&& parcel build src/* --dist-dir dist/ --no-optimize && copyfiles icons/* dist"
+    "build:chrome": "set HOPP_EXTENSION_TARGET=CHROME && parcel build src/* --dist-dir dist/ --no-optimize && copyfiles icons/* dist",
+    "build:firefox": "set HOPP_EXTENSION_TARGET=FIREFOX && parcel build src/* --dist-dir dist/ --no-optimize && copyfiles icons/* dist"
   },
   "author": "Andrew Bastin",
   "license": "MIT",

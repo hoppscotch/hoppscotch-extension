@@ -44,6 +44,16 @@ async function fetchUsingAxiosConfig(
     } catch (_) {}
   }
 
+  try {
+    const contentType = axiosConfig.headers["content-type"] || "";
+
+    if (contentType.includes("application/json") && axiosConfig.data && typeof axiosConfig.data !== "string") {
+      axiosConfig.data = JSON.stringify(axiosConfig.data);
+    }
+  } catch (e) {
+    console.error("Error stringifying axiosConfig.data:", e, axiosConfig.data);
+  }
+
   // TODO: check different examples with axios body
   const res = await fetch(axiosConfig.url, {
     headers: {

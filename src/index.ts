@@ -376,9 +376,8 @@ chrome.runtime.onMessage.addListener(
 
 let originList: string[] = []
 
-chrome.storage.sync.get((items) => {
-  originList = JSON.parse(items["originList"])
-})
+
+//was broken here
 
 chrome.storage.onChanged.addListener((changes, _areaName) => {
   if (changes.originList && changes.originList.newValue) {
@@ -423,10 +422,10 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onMessage.addListener((message, sender) => {
   if (message.type && message.type == "execute_hook" && sender.tab.id) {
     const files =
-      message.origin_type == "VALID_ORIGIN"
-        ? ["hookContent.js"]
-        : ["hookContentInvalidOrigin.js"]
-
+    message.origin_type == "VALID_ORIGIN"
+    ? ["hookContent.js"]
+    : ["hookContentInvalidOrigin.js"]
+    
     chrome.scripting.executeScript({
       target: {
         tabId: sender.tab.id,
@@ -436,6 +435,16 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     })
   }
 })
+
+chrome.storage.sync.get((items) => {
+  let originList: string[];
+  if(!items['originList']){
+    originList = ["https://hoppscotch.io"]
+    }else{
+    originList = JSON.parse(items["originList"])
+    }
+})
+
 
 let activeWebSocket: WebSocket = null;
 

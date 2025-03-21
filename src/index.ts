@@ -376,9 +376,6 @@ chrome.runtime.onMessage.addListener(
 
 let originList: string[] = []
 
-
-//was broken here
-
 chrome.storage.onChanged.addListener((changes, _areaName) => {
   if (changes.originList && changes.originList.newValue) {
     originList = JSON.parse(changes.originList.newValue)

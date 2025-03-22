@@ -12,16 +12,21 @@ This extension provides the following features to Hoppscotch:
 
 - [x] Overrides `CORS` restrictions for cross-origin requests (it allows requests against localhost).
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > If you want to use the extension anywhere outside [the official Hoppscotch instance](https://hoppscotch.io) you may want to add the domain to the extension's origin list. You can access the origin list by clicking on the extension icon on your browser toolbar.
 
 ### Development
-We use [pnpm](https://pnpm.io) as our package manager. Please install it before proceeding.
 
-- Clone the repo
-- Run `pnpm install`
-- Run `pnpm run build:chrome` or `pnpm run build:firefox` depending on your browser to generate the *dist* folder
-- Install the extension using your browser's install options (a quick Google search will yield the methods)
+1. Install or verify the installation of [pnpm](https://pnpm.io)
+2. Clone the repository
+3. Open the root folder in a [Git Bash](https://www.geeksforgeeks.org/working-on-git-bash/) command-line
+4. Run `pnpm install` to install the necessary packages
+5. Generate the **dist** folder for the target browser
+    1. For Chrome, run `pnpm run build:chrome`
+    2. For Firefox, run `pnpm run build:firefox`
+4. Package and install the extension to the target browser
+    1. For Chrome, follow this [tutorial](https://developer.chrome.com/docs/extensions/get-started/)
+    2. For Firefox, follow this [tutorial](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension)
 
 Hoppscotch is built with the help of an amazing group of people.
 

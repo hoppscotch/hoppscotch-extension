@@ -3,7 +3,7 @@ const fs = require("fs").promises
 
 module.exports = new Reporter({
   async report({ event }) {
-    const target = process.env.HOPP_EXTENSION_TARGET
+    const target = process.env.HOPP_EXTENSION_TARGET.trim();
 
     if (!target) {
       return

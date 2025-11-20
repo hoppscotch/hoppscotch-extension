@@ -376,10 +376,6 @@ chrome.runtime.onMessage.addListener(
 
 let originList: string[] = []
 
-chrome.storage.sync.get((items) => {
-  originList = JSON.parse(items["originList"])
-})
-
 chrome.storage.onChanged.addListener((changes, _areaName) => {
   if (changes.originList && changes.originList.newValue) {
     originList = JSON.parse(changes.originList.newValue)
@@ -423,10 +419,10 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onMessage.addListener((message, sender) => {
   if (message.type && message.type == "execute_hook" && sender.tab.id) {
     const files =
-      message.origin_type == "VALID_ORIGIN"
-        ? ["hookContent.js"]
-        : ["hookContentInvalidOrigin.js"]
-
+    message.origin_type == "VALID_ORIGIN"
+    ? ["hookContent.js"]
+    : ["hookContentInvalidOrigin.js"]
+    
     chrome.scripting.executeScript({
       target: {
         tabId: sender.tab.id,
@@ -436,3 +432,66 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     })
   }
 })
+
+chrome.storage.sync.get((items) => {
+  let originList: string[];
+  if(!items['originList']){
+    originList = ["https://hoppscotch.io"]
+    }else{
+    originList = JSON.parse(items["originList"])
+    }
+})
+
+
+let activeWebSocket: WebSocket = null;
+
+function connectWebSocket(wsUrl: string | URL) {
+  if (!wsUrl) {
+    console.warn("No WebSocket URL provided.");
+    return;
+  }
+
+  console.log(`Connecting to WebSocket: ${wsUrl}`);
+
+  activeWebSocket = new WebSocket(wsUrl);
+
+  activeWebSocket.onopen = () => console.log("WebSocket Connected:", wsUrl);
+
+  activeWebSocket.onmessage = (event) => console.log("WebSocket Message:", event.data);
+
+  activeWebSocket.onerror = (error) => console.error("WebSocket Error:", error);
+
+  activeWebSocket.onclose = (event) => {
+    console.warn(`WebSocket Closed: Code ${event.code}, Reason: ${event.reason}`);
+  };
+}
+
+// Check for WebSocket URLs in Active Origins
+chrome.storage.sync.get(["originList"], (data) => {
+  const originList = JSON.parse(data.originList || "[]");
+  const wsUrl = originList.find((url: string) => url.startsWith("ws://") || url.startsWith("wss://"));
+
+  if (wsUrl) {
+    connectWebSocket(wsUrl);
+  }
+});
+
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes.originList) {
+    const newOriginList = JSON.parse(changes.originList.newValue || "[]");
+    const wsUrl = newOriginList.find((url: string) => url.startsWith("ws://") || url.startsWith("wss://"));
+
+    // Close the WebSocket if it's removed from the list
+    if (!wsUrl && activeWebSocket) {
+      console.log("Closing connection.");
+      activeWebSocket.close();
+      activeWebSocket = null; 
+    } else if (wsUrl && (!activeWebSocket || activeWebSocket.readyState !== WebSocket.OPEN)) {
+      // If a new WebSocket URL is found, and WebSocket is not open, reconnect
+      if (activeWebSocket) {
+        activeWebSocket.close();
+      }
+      connectWebSocket(wsUrl);
+    }
+  }
+});

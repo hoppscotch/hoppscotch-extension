@@ -377,7 +377,7 @@ chrome.runtime.onMessage.addListener(
 let originList: string[] = []
 
 chrome.storage.sync.get((items) => {
-  originList = JSON.parse(items["originList"])
+  originList = items["originList"] ? JSON.parse(items["originList"]) : null
 })
 
 chrome.storage.onChanged.addListener((changes, _areaName) => {

@@ -1,4 +1,4 @@
-;(() => {
+; (() => {
   const defineSubscribableObject = (obj) =>
     new Proxy(
       {
@@ -163,6 +163,8 @@
             const e = new Error(error.message, error.fileName, error.lineNumber)
             e.name = error.name
             e.stack = error.stack
+            e.code = error.code
+            e.friendlyMessage = error.friendlyMessage
             if (error.response) {
               e.response = error.response
 

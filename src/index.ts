@@ -8,7 +8,35 @@ type HoppExtensionRequestMeta = {
   }
 }
 
-let abortController = new AbortController()
+
+/**
+ * Classified, user-facing reasons a request can fail.
+ * Kept small and stable so the webapp can safely switch on `code`.
+ */
+
+type HoppExtensionErrorCode =
+  | "INVALID_URL"
+  | "CANCELLED"
+  | "TIMEOUT"
+  | "NETWORK_ERROR"
+  | "UNKNOWN"
+
+const REQUEST_TIMEOUT_MS = 30000
+const FRIENDLY_ERROR_MESSAGES: Record<HoppExtensionErrorCode, string> = {
+  INVALID_URL: "Request failed – the endpoint URL looks invalid.",
+  CANCELLED: "The request was cancelled.",
+  TIMEOUT: "The request timed out – the server took too long to respond.",
+  NETWORK_ERROR:
+    "Network error – please check your connection or verify the endpoint is reachable.",
+  UNKNOWN: "Something went wrong while making the request.",
+}
+
+// requests currently in flight, so a "cancel" can abort all of them
+const activeRequestControllers = new Set<AbortController>()
+
+// per-request bookkeeping so we can tell a timeout apart from a user cancel
+// even though both surface as the same DOMException from `fetch`
+const timedOutControllers = new WeakSet<AbortController>()
 
 const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
   Object.entries(headers).reduce((fetchHeaders, [key, value]): HeadersInit => {
@@ -17,16 +45,48 @@ const convertAxiosHeadersIntoFetchHeaders = (headers: AxiosRequestHeaders) =>
     return key == "content-type" && headers[key] == "multipart/form-data"
       ? { ...fetchHeaders }
       : {
-          ...fetchHeaders,
-          [key]: value.toString(),
-        }
+        ...fetchHeaders,
+        [key]: value.toString(),
+      }
   }, <HeadersInit>{})
 
-async function fetchUsingAxiosConfig(
-  axiosConfig: AxiosRequestConfig<any>
-): Promise<[Response, HoppExtensionRequestMeta]> {
-  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(axiosConfig.headers)
+function assertValidUrl(rawUrl: string | undefined): asserts rawUrl is string {
+  if (!rawUrl) {
+    throw new HoppExtensionError(
+      "INVALID_URL",
+      "Request URL is empty or missing."
+    )
+  }
 
+  try {
+    // eslint-disable-next-line no-new
+    new URL(rawUrl)
+  } catch (_e) {
+    throw new HoppExtensionError(
+      "INVALID_URL",
+      `"${rawUrl}" is not a valid URL.`
+    )
+  }
+}
+
+
+class HoppExtensionError extends Error {
+  code: HoppExtensionErrorCode
+
+  constructor(code: HoppExtensionErrorCode, message?: string) {
+    super(message ?? FRIENDLY_ERROR_MESSAGES[code])
+    this.code = code
+    this.name = "HoppExtensionError"
+  }
+}
+
+async function fetchUsingAxiosConfig(
+  axiosConfig: AxiosRequestConfig<any>,
+  controller: AbortController
+): Promise<[Response, HoppExtensionRequestMeta]> {
+  assertValidUrl(axiosConfig.url)
+
+  const fetchHeaders = convertAxiosHeadersIntoFetchHeaders(axiosConfig.headers)
   const requestMeta: HoppExtensionRequestMeta = { timeData: {} }
   requestMeta.timeData.startTime = new Date().getTime()
 
@@ -41,33 +101,74 @@ async function fetchUsingAxiosConfig(
       })
 
       axiosConfig.url = url.toString()
-    } catch (_) {}
+    } catch (_) { }
   }
 
-  // TODO: check different examples with axios body
-  const res = await fetch(axiosConfig.url, {
-    headers: {
-      ...fetchHeaders,
-    },
-    method: axiosConfig.method,
+  const timeoutHandle = setTimeout(() => {
+    timedOutControllers.add(controller)
+    controller.abort()
+  }, REQUEST_TIMEOUT_MS)
 
-    // Ignore the body for GET and HEAD requests to prevent error with axios
-    body: ["get", "head"].includes(axiosConfig.method?.toLowerCase())
-      ? undefined
-      : axiosConfig.data,
-    signal: abortController.signal,
-  })
+  try {
+    // TODO: check different examples with axios body
+    const res = await fetch(axiosConfig.url, {
+      headers: {
+        ...fetchHeaders,
+      },
+      method: axiosConfig.method,
 
-  requestMeta.timeData.endTime = new Date().getTime()
+      // Ignore the body for GET and HEAD requests to prevent error with axios
+      body: ["get", "head"].includes(axiosConfig.method?.toLowerCase())
+        ? undefined
+        : axiosConfig.data,
+      signal: controller.signal,
+    })
 
-  return [res, requestMeta]
+    requestMeta.timeData.endTime = new Date().getTime()
+
+    return [res, requestMeta]
+  } catch (e) {
+    throw classifyFetchError(e, controller)
+  } finally {
+    clearTimeout(timeoutHandle)
+  }
+}
+
+/**
+ * Turns whatever `fetch`/browser throws into a `HoppExtensionError` with a
+ * stable `code` and a clear, user-facing `message` so the UI never has to
+ * show a blank/silent failure or a raw "TypeError: Failed to fetch".
+ */
+function classifyFetchError(
+  e: any,
+  controller: AbortController
+): HoppExtensionError {
+  if (e instanceof HoppExtensionError) return e
+
+  if (e && e.name === "AbortError") {
+    if (timedOutControllers.has(controller)) {
+      return new HoppExtensionError("TIMEOUT")
+    }
+    return new HoppExtensionError("CANCELLED")
+  }
+
+  // Browsers surface network failures, DNS failures, refused connections,
+  // and (in the rare case the target isn't covered by host permissions)
+  // CORS/blocked-origin failures all as the same generic TypeError, so we
+  // can't reliably tell those apart here — but we can at least give the
+  // user an actionable message instead of a stack trace.
+  if (e instanceof TypeError) {
+    return new HoppExtensionError("NETWORK_ERROR")
+  }
+
+  return new HoppExtensionError("UNKNOWN", e?.message)
 }
 
 function errorToObject(e: any) {
   if (e.response && e.response.data) {
     try {
       e.response.data = bufferToBase64(e.response.data)
-    } catch (_e) {}
+    } catch (_e) { }
   }
 
   // This mess below is a hack to go around Firefox's memory bounding system
@@ -86,6 +187,13 @@ function errorToObject(e: any) {
     stack: e.stack ? JSON.parse(JSON.stringify(e.stack)) : undefined,
     // Axios
     response: e.response ? JSON.parse(JSON.stringify(e.response)) : undefined,
+    // Hoppscotch extension classification, used by the webapp to show a
+    // clear, actionable message instead of a raw/blank error.
+    code: e.code ?? "UNKNOWN",
+    friendlyMessage:
+      FRIENDLY_ERROR_MESSAGES[e.code as HoppExtensionErrorCode] ??
+      FRIENDLY_ERROR_MESSAGES.UNKNOWN,
+
   }
 }
 
@@ -208,11 +316,8 @@ const processBinaryBody: (
 ) => Promise<AxiosRequestConfig> = async (reqConfig) => {
   if (reqConfig.binaryContent) {
     const objectURL = reqConfig.binaryContent.objectURL
-
     const response = await fetch(objectURL)
-
     const blob = await response.blob()
-
     reqConfig.data = new File([blob], reqConfig.binaryContent.name, {})
   }
 
@@ -247,7 +352,7 @@ const processDataBasedOnContentType = async (
   ) {
     try {
       data = JSON.parse(data)
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -264,6 +369,9 @@ const getAllFetchResponseHeaders = (
 }
 
 const handleSendRequestMessage = async (config: any, tabID?: number) => {
+  const controller = new AbortController()
+  activeRequestControllers.add(controller)
+
   try {
     const processedConfig = await processRequest(config)
 
@@ -272,7 +380,8 @@ const handleSendRequestMessage = async (config: any, tabID?: number) => {
         ...processedConfig,
         responseType: "arraybuffer",
         validateStatus: () => true,
-      })
+      },
+        controller)
 
       let headers = getAllFetchResponseHeaders(r.headers)
 
@@ -294,7 +403,7 @@ const handleSendRequestMessage = async (config: any, tabID?: number) => {
     } else {
       const [res, requestMeta] = await fetchUsingAxiosConfig({
         ...processedConfig,
-      })
+      }, controller)
 
       const resText = await res.text()
       const contentTypeHeader = res.headers.get("content-type")
@@ -331,6 +440,7 @@ const handleSendRequestMessage = async (config: any, tabID?: number) => {
       },
     }
   } finally {
+    activeRequestControllers.delete(controller)
     // revoke the objectURLs, if any
     // keeping this as an array, cause in the future, if we're adding support for formdata files in a similar way, we can add those objectURLs here
     const objectURLsToRevoke: string[] = []
@@ -346,7 +456,7 @@ const handleSendRequestMessage = async (config: any, tabID?: number) => {
           action: "__POSTWOMAN_EXTENSION_REVOKE_OBJECT_URLS__",
           objectURLsToRevoke,
         },
-        () => {}
+        () => { }
       )
     }
 
@@ -356,10 +466,8 @@ const handleSendRequestMessage = async (config: any, tabID?: number) => {
 }
 
 const cancelRequest = () => {
-  abortController.abort()
-
-  // reset the abort controller for the next request
-  abortController = new AbortController()
+  activeRequestControllers.forEach((controller) => controller.abort())
+  activeRequestControllers.clear()
 }
 
 chrome.runtime.onMessage.addListener(
@@ -414,7 +522,7 @@ chrome.runtime.onInstalled.addListener(() => {
         {
           originList: JSON.stringify(DEFAULT_ORIGIN_LIST),
         },
-        () => {}
+        () => { }
       )
     }
   })

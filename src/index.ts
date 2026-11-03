@@ -249,6 +249,8 @@ const processDataBasedOnContentType = async (
       data = JSON.parse(data)
     } catch (e) {}
   }
+
+  return data
 }
 
 const getAllFetchResponseHeaders = (

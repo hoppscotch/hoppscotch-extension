@@ -42,7 +42,10 @@
       const keyStr =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
-      const bytes = parseInt((input.length / 4) * 3, 10)
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "")
+
+      const padding = input.endsWith("==") ? 2 : input.endsWith("=") ? 1 : 0
+      const bytes = Math.floor((input.length / 4) * 3) - padding
 
       let uarray
       let chr1, chr2, chr3
@@ -52,8 +55,6 @@
 
       if (ab) uarray = new Uint8Array(ab)
       else uarray = new Uint8Array(bytes)
-
-      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "")
 
       for (i = 0; i < bytes; i += 3) {
         //get the 3 octects in 4 ascii chars
@@ -144,14 +145,10 @@
           if (ev.data.type === "__POSTWOMAN_EXTENSION_RESPONSE__") {
             // Apply transformation from base64 to arraybuffer
             if (ev.data.isBinary) {
-              const bytes = (ev.data.response.data.length / 4) * 3
-              const ab = new ArrayBuffer(bytes)
-              window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(
-                ev.data.response.data,
-                ab
-              )
-
-              ev.data.response.data = ab
+              ev.data.response.data =
+                window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(
+                  ev.data.response.data
+                ).buffer
             }
 
             resolve(ev.data.response)
@@ -166,14 +163,10 @@
             if (error.response) {
               e.response = error.response
 
-              const bytes = (e.response.data.length / 4) * 3
-              const ab = new ArrayBuffer(bytes)
-
-              window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(
-                e.response.data,
-                ab
-              )
-              e.response.data = ab
+              e.response.data =
+                window.__POSTWOMAN_EXTENSION_HOOK__.decodeB64ToArrayBuffer(
+                  e.response.data
+                ).buffer
             }
             reject(e)
             window.removeEventListener("message", handleMessage)

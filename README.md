@@ -23,6 +23,10 @@ We use [pnpm](https://pnpm.io) as our package manager. Please install it before 
 - Run `pnpm run build:chrome` or `pnpm run build:firefox` depending on your browser to generate the *dist* folder
 - Install the extension using your browser's install options (a quick Google search will yield the methods)
 
+### Tests
+
+Run `pnpm test` with Node.js 18 or later to run the hook regression tests. These tests do not require a browser or installed dependencies.
+
 Hoppscotch is built with the help of an amazing group of people.
 
 Contribute to Hoppscotch: <a href="https://github.com/hoppscotch/hoppscotch">https://github.com/hoppscotch/hoppscotch</a>

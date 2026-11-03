@@ -3,6 +3,7 @@
   "version": "0.37.0",
   "description": "Provides more features to the Hoppscotch webapp (https://hoppscotch.io/)",
   "scripts": {
+    "test": "node --test tests/*.test.cjs",
     "clean": "rimraf dist .parcel-cache",
     "build:chrome": "HOPP_EXTENSION_TARGET=CHROME parcel build src/* --dist-dir dist/ --no-optimize && copyfiles icons/* dist",
     "build:firefox": "HOPP_EXTENSION_TARGET=FIREFOX parcel build src/* --dist-dir dist/ --no-optimize && copyfiles icons/* dist"

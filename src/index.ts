@@ -120,7 +120,10 @@ const parseCookieString: (str: string) => { [property: string]: string } = (
 ) =>
   str
     .split(";")
-    .map((value) => value.split("="))
+    .map((cookie) => {
+      const [name, ...value] = cookie.split("=")
+      return [name, value.join("=")]
+    })
     .reduce((acc, curr) => {
       if (!!curr[0] && !!curr[1]) {
         acc[decodeURIComponent(curr[0].trim())] = decodeURIComponent(
